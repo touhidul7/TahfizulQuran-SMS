@@ -68,13 +68,13 @@ const PayFee = () => {
      // Prepare data to send via Web3Forms
      const web3FormData = new FormData();
      web3FormData.append("access_key", "f5d5e90f-6ea7-455b-b93a-9819968e2790");
-     web3FormData.append("studentName", studentDetails.studentNameEn || "N/A");
+     web3FormData.append("studentName", formData.studentNameEn || "N/A");
      web3FormData.append("studentId", studentID || "N/A");
      web3FormData.append("paymentMethod", formData.pType || "N/A");
-     web3FormData.append("paymentNumber", formData.pRef || "N/A");
-     web3FormData.append("transactionId", studentDetails.trxid || "N/A");
+     web3FormData.append("paymentNumber", formData.pDetails || "N/A");
+     web3FormData.append("transactionId", formData.trxid || "N/A");
      web3FormData.append("amount", formData.amount || "N/A");
-     web3FormData.append("className", studentDetails.classname || "N/A");
+     web3FormData.append("className", formData.classname || "N/A");
    
      try {
        setResult("Sending...");
@@ -191,7 +191,6 @@ const PayFee = () => {
                 <div className="text-lg w-64">: 1000</div>
               </div> */}
               <form onSubmit={feeHandle}>
-              <input type="hidden" name="subject" value="Monthly Fee"/>
                 <FormSection title="Payment Information">
                   <SelectField
                     label="Select Payment"

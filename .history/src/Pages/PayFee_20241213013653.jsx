@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 
 const PayFee = () => {
   const [studentID, setStudentID] = useState("");
-  const [result, setResult] = useState("");
   // const [classname, setClassname] = useState("");
   const [studentDetails, setStudentDetails] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -61,52 +60,13 @@ const PayFee = () => {
 
   };
 
-  // collect feeeeeee ###########################
-
-  const feeHandle = async (e) =>{
-    e.preventDefault();
-     // Prepare data to send via Web3Forms
-     const web3FormData = new FormData();
-     web3FormData.append("access_key", "f5d5e90f-6ea7-455b-b93a-9819968e2790");
-     web3FormData.append("studentName", studentDetails.studentNameEn || "N/A");
-     web3FormData.append("studentId", studentID || "N/A");
-     web3FormData.append("paymentMethod", formData.pType || "N/A");
-     web3FormData.append("paymentNumber", formData.pRef || "N/A");
-     web3FormData.append("transactionId", studentDetails.trxid || "N/A");
-     web3FormData.append("amount", formData.amount || "N/A");
-     web3FormData.append("className", studentDetails.classname || "N/A");
-   
-     try {
-       setResult("Sending...");
-   
-       const response = await fetch("https://api.web3forms.com/submit", {
-         method: "POST",
-         body: web3FormData,
-       });
-   
-       const data = await response.json();
-   
-       if (data.success) {
-         setResult("Form Submitted Successfully");
-         toast.success("Data sent to Web3Forms!");
-         console.log("Web3Forms Response:", data);
-       } else {
-         setResult("Failed to submit the form.");
-         console.error("Web3Forms Error:", data);
-       }
-     } catch (error) {
-       setResult("An error occurred during submission.");
-       toast.error("An error occurred while sending data to Web3Forms.");
-       console.error("Web3Forms Submission Error:", error);
-     }
+  const feeHandle = async () =>{
     try {
-      const finalFormData = { ...formData, stdName: studentDetails.studentNameEn, roll: studentID,course: studentDetails.classname};
+      const finalFormData = { ...formData, stdName: studentDetails.studentNameEn, roll: studentID };
       const formDataToSend = new FormData();
       Object.entries(finalFormData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
-      console.log(formDataToSend);
-      
   
       const response = await axios.post(
         "http://127.0.0.1:8000/api/students/fee",
@@ -137,7 +97,7 @@ const PayFee = () => {
           Search Student Details
         </h2>
         <div>
-        <form className="p-6">
+        <form className="p-6" onSubmit={feeHandle}>
           <FormSection title="Student Information">
             <InputField
               label="Student ID"
@@ -190,8 +150,7 @@ const PayFee = () => {
                 <div className="text-lg font-bold ">Monthly Fee</div>
                 <div className="text-lg w-64">: 1000</div>
               </div> */}
-              <form onSubmit={feeHandle}>
-              <input type="hidden" name="subject" value="Monthly Fee"/>
+              <form>
                 <FormSection title="Payment Information">
                   <SelectField
                     label="Select Payment"
@@ -222,7 +181,6 @@ const PayFee = () => {
                   />
                 </FormSection>
                 <button
-                type="submit"
                   className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full"
                 >
                   Submit Payment
