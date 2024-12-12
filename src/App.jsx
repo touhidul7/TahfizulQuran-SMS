@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import InputField from "./Components/InputField";
 import SelectField from "./Components/SelectField";
-import AddressSection from "./Components/AddressSection";
 import FormSection from "./Components/FormSection";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -25,7 +24,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    generateNumber(); 
+    generateNumber();
   }, []);
 
   const handleInputChange = (e) => {
@@ -64,7 +63,8 @@ const App = () => {
     );
     doc.text("Phone: +880 1717084442", 20, 45);
     doc.text("Email: mbsn2918@gmail.com", 20, 50);
-
+    doc.setFont("helvetica", "bold");
+    doc.text(`Student ID: ${studentID}`, 150, 45);
     // Invoice Details
     doc.setFontSize(12);
     doc.text(`Invoice Number: ${invoiceNo}`, 140, 30);
@@ -80,7 +80,7 @@ const App = () => {
 
     doc.setFont("helvetica", "normal");
     doc.text(`Student Name: ${formData.studentNameEn || "N/A"}`, 20, 75);
-    doc.text(`Student ID: ${formData.birthCertificate || "N/A"}`, 20, 85);
+
     doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 95);
 
     doc.text(`Class Name: ${formData.classname || "N/A"}`, 105, 75);
@@ -108,10 +108,6 @@ const App = () => {
     doc.text(`${formData.amount || "N/A"} BDT`, 150, 140, {
       align: "right",
     });
-
-    doc.setFont("helvetica", "bold");
-    doc.text("Student ID", 20, 150);
-    doc.text(`${studentID}`, 150, 150);
 
     // Footer Section
     doc.setFontSize(10);
@@ -207,13 +203,10 @@ const App = () => {
               name="studentNameBn"
               onChange={handleInputChange}
             />
-            <InputField
-              label="Mother Mobile Number"
-              name="motherMobile"
-              onChange={handleInputChange}
-            />
+            
             <InputField
               label="Email (Optional)"
+              requried={false}
               type="email"
               name="email"
               onChange={handleInputChange}
@@ -280,6 +273,11 @@ const App = () => {
               onChange={handleInputChange}
             />
             <InputField
+              label="Mother Mobile Number"
+              name="motherMobile"
+              onChange={handleInputChange}
+            />
+            <InputField
               label="National ID Number"
               name="nid"
               onChange={handleInputChange}
@@ -293,14 +291,21 @@ const App = () => {
           </FormSection>
 
           {/* Present Address */}
-          <AddressSection
-            title="Present Address"
-            onChange={handleInputChange}
-          />
-          <AddressSection
-            title="Permanent Address (Same as Present Address)"
-            onChange={handleInputChange}
-          />
+          <FormSection title="Present Address" >
+            <InputField label="Village/House, Road" name="villagePresent" onChange={handleInputChange}/>
+            <InputField label="Post" name="postPresent" onChange={handleInputChange}/>
+            <InputField label="Thana" name="thanaPresent" onChange={handleInputChange}/>
+            <InputField label="District" name="districtPresent" onChange={handleInputChange}/>
+          </FormSection>
+
+          <FormSection title="Permanent Address">
+            <InputField label="Village/House, Road" name="villagePermanent" onChange={handleInputChange}/>
+            <InputField label="Post" name="postPermanent" onChange={handleInputChange}/>
+            <InputField label="Thana" name="thanaPermanent" onChange={handleInputChange}/>
+            <InputField label="District" name="districtPermanent" onChange={handleInputChange}/>
+          </FormSection>
+
+          
 
           {/* Student Admission Information */}
           <FormSection title="Student Admission Information">
@@ -326,7 +331,7 @@ const App = () => {
             />
             <InputField
               label=""
-              name="studentid"
+              name="studentId"
               type="hidden"
               onChange={handleInputChange}
               value={studentID}
