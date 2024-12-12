@@ -123,7 +123,7 @@ const PayFee = () => {
                   />
                   <InputField
                     label="Fee Amount"
-                    name="feeAmount"
+                    name="pyamentnumber"
                   />
                   <InputField label="Transaction ID" name="trxid" />
                   <InputField

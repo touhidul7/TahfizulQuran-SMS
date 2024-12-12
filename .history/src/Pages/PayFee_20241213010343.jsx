@@ -1,15 +1,23 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import SelectField from "../Components/SelectField";
 import InputField from "../Components/InputField";
 
 const PayFee = () => {
   const [studentID, setStudentID] = useState("");
-  // const [classname, setClassname] = useState("");
+  const [classname, setClassname] = useState("");
   const [studentDetails, setStudentDetails] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-
+  const classOptions = [
+    { label: "Select Class", value: "" },
+    { label: "Class 1", value: "class 1" },
+    { label: "Class 2", value: "class 2" },
+    { label: "Class 3", value: "class 3" },
+    { label: "Class 4", value: "class 4" },
+    { label: "Class 5", value: "class 5" },
+    { label: "Class 6", value: "class 6" },
+    { label: "Class 7", value: "class 7" },
+  ];
 
   const PaymentOptions = [
     { label: "Select Payment", value: "" },
@@ -97,7 +105,7 @@ const PayFee = () => {
               <div className="flex justify-between items-center border border-gray-200 px-6 py-2 rounded-md">
                 <div className="text-lg font-bold ">Student ID</div>
                 <div className="text-lg w-64">
-                  : {studentDetails.studentId || "N/A"}
+                  : {studentDetails.studentid || "N/A"}
                 </div>
               </div>
               <div className="flex justify-between items-center border border-gray-200 px-6 py-2 rounded-md">
@@ -106,10 +114,10 @@ const PayFee = () => {
                   : {studentDetails.classname || "N/A"}
                 </div>
               </div>
-              {/* <div className="flex justify-between items-center border border-gray-200 px-6 py-2 rounded-md">
+              <div className="flex justify-between items-center border border-gray-200 px-6 py-2 rounded-md">
                 <div className="text-lg font-bold ">Monthly Fee</div>
                 <div className="text-lg w-64">: 1000</div>
-              </div> */}
+              </div>
               <form>
                 <FormSection title="Payment Information">
                   <SelectField
@@ -120,10 +128,6 @@ const PayFee = () => {
                   <InputField
                     label="Payment Phone Number"
                     name="pyamentnumber"
-                  />
-                  <InputField
-                    label="Fee Amount"
-                    name="feeAmount"
                   />
                   <InputField label="Transaction ID" name="trxid" />
                   <InputField
@@ -153,6 +157,6 @@ export default PayFee;
 const FormSection = ({ title, children }) => (
   <fieldset className="border border-green-600 p-4 mb-4">
     <legend className="px-2 text-lg text-green-700">{title}</legend>
-    <div className="grid grid-cols-1 gap-4">{children}</div>
+    <div className="grid grid-cols-2 gap-4">{children}</div>
   </fieldset>
 );

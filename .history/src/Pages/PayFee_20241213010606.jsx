@@ -121,10 +121,6 @@ const PayFee = () => {
                     label="Payment Phone Number"
                     name="pyamentnumber"
                   />
-                  <InputField
-                    label="Fee Amount"
-                    name="feeAmount"
-                  />
                   <InputField label="Transaction ID" name="trxid" />
                   <InputField
                     label="Select Month"
