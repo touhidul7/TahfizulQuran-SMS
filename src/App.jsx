@@ -4,6 +4,7 @@ import InputField from "./Components/InputField";
 import SelectField from "./Components/SelectField";
 import AddressSection from "./Components/AddressSection";
 import FormSection from "./Components/FormSection";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
   const [formData, setFormData] = useState({});
@@ -146,8 +147,9 @@ const App = () => {
     /* Local Sotrage------------------------- */
     // Save formData to local storage
     const storedData = JSON.parse(localStorage.getItem("formDataArray")) || []; // Parse existing or initialize empty array
-    storedData.push({ ...formData, invoiceNo, studentID }); // Add new data
+    storedData.push({ ...formData, invoiceNo }); // Add new data
     localStorage.setItem("formDataArray", JSON.stringify(storedData)); // Save updated array
+    toast.success('Successfully Submited!')
     /* Local Sotrage end------------------------- */
   };
 
@@ -189,6 +191,7 @@ const App = () => {
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center py-8">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="bg-white w-full max-w-5xl rounded-lg shadow-lg p-6">
         <img src="./img/Form-Heading.jpg" alt="" />
         <form onSubmit={handleSubmit}>
@@ -320,17 +323,19 @@ const App = () => {
               value="2024-2025"
               onChange={handleInputChange}
             />
-            <InputField
-              label="Student ID"
-              name="studentid"
-              type="hi"
-              onChange={handleInputChange}
-              value={studentID}
-            />
+             
             <InputField
               label="Amount"
               name="amount"
               onChange={handleInputChange}
+            />
+             <InputField
+              label=""
+              name="studentid"
+              type="hidden"
+              onChange={handleInputChange}
+              value={studentID}
+              
             />
           </FormSection>
 
