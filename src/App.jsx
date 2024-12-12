@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import InputField from "./Components/InputField";
 import SelectField from "./Components/SelectField";
@@ -24,6 +24,10 @@ const App = () => {
     console.log(`Generated Random Number: ${randomNumber}`);
   };
 
+  useEffect(() => {
+    generateNumber(); 
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -42,8 +46,6 @@ const App = () => {
 
   const generateInvoice = (invoiceNo) => {
     const doc = new jsPDF();
-
-    // Generate a unique invoice number
 
     // Header Section
     doc.setFontSize(18);
@@ -82,7 +84,7 @@ const App = () => {
     doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 95);
 
     doc.text(`Class Name: ${formData.classname || "N/A"}`, 105, 75);
-    doc.text(`Addmission Fee: ${formData.amount || "N/A"}`, 105, 85);
+    doc.text(`Admission Fee: ${formData.amount || "N/A"}`, 105, 85);
     doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, 105, 95);
 
     // Table Header
@@ -92,7 +94,7 @@ const App = () => {
 
     // Table Data
     doc.setFont("helvetica", "normal");
-    doc.text("Addmission Fee", 20, 120);
+    doc.text("Admission Fee", 20, 120);
     doc.text(`${formData.amount || "N/A"} BDT`, 150, 120, {
       align: "right",
     });
@@ -109,7 +111,6 @@ const App = () => {
 
     doc.setFont("helvetica", "bold");
     doc.text("Student ID", 20, 150);
-    30;
     doc.text(`${studentID}`, 150, 150);
 
     // Footer Section
@@ -124,9 +125,6 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!studentID) {
-      generateNumber();
-    }
     // Generate Invoice Number
     const baseString = `${formData.studentNameEn || ""}${formData.class || ""}${
       formData.dob || ""
@@ -138,19 +136,16 @@ const App = () => {
 
     // Log form data and invoice number
     console.log("Form Data:", formData);
-
     console.log("Invoice No:", invoiceNo);
 
     // Generate Invoice
     generateInvoice(invoiceNo);
 
-    /* Local Sotrage------------------------- */
     // Save formData to local storage
-    const storedData = JSON.parse(localStorage.getItem("formDataArray")) || []; // Parse existing or initialize empty array
+    const storedData = JSON.parse(localStorage.getItem("formDataArray")) || [];
     storedData.push({ ...formData, invoiceNo }); // Add new data
-    localStorage.setItem("formDataArray", JSON.stringify(storedData)); // Save updated array
-    toast.success('Successfully Submited!')
-    /* Local Sotrage end------------------------- */
+    localStorage.setItem("formDataArray", JSON.stringify(storedData));
+    toast.success("Successfully Submitted!");
   };
 
   const genderOptions = [
@@ -188,7 +183,6 @@ const App = () => {
     { label: "Nagad", value: "nagad" },
     { label: "Cash", value: "cash" },
   ];
-
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center py-8">
       <Toaster position="top-center" reverseOrder={false} />
@@ -323,19 +317,19 @@ const App = () => {
               value="2024-2025"
               onChange={handleInputChange}
             />
-             
+
             <InputField
               label="Amount"
+              type="number"
               name="amount"
               onChange={handleInputChange}
             />
-             <InputField
+            <InputField
               label=""
               name="studentid"
               type="hidden"
               onChange={handleInputChange}
               value={studentID}
-              
             />
           </FormSection>
 
