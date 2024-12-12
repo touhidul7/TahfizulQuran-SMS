@@ -13,13 +13,13 @@ const App = () => {
     // Generate a random 6-character number
     const randomNumber = Math.floor(100000 + Math.random() * 900000);
     setStudentID(randomNumber);
-  
+
     // Update the student ID in formData
     setFormData((prevData) => ({
       ...prevData,
       studentid: randomNumber,
     }));
-  
+
     console.log(`Generated Random Number: ${randomNumber}`);
   };
 
@@ -107,7 +107,8 @@ const App = () => {
     });
 
     doc.setFont("helvetica", "bold");
-    doc.text("Student ID", 20, 150);30
+    doc.text("Student ID", 20, 150);
+    30;
     doc.text(`${studentID}`, 150, 150);
 
     // Footer Section
@@ -123,8 +124,8 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!studentID) {
-    generateNumber();
-  }
+      generateNumber();
+    }
     // Generate Invoice Number
     const baseString = `${formData.studentNameEn || ""}${formData.class || ""}${
       formData.dob || ""
@@ -133,13 +134,21 @@ const App = () => {
       .replace(/[^a-zA-Z0-9]/g, "") // Remove special characters
       .toUpperCase();
     const invoiceNo = baseString.substring(0, 8).padEnd(8, "X"); // Ensure it’s 8 characters long
-   
+
     // Log form data and invoice number
     console.log("Form Data:", formData);
+
     console.log("Invoice No:", invoiceNo);
 
     // Generate Invoice
     generateInvoice(invoiceNo);
+
+    /* Local Sotrage------------------------- */
+    // Save formData to local storage
+    const storedData = JSON.parse(localStorage.getItem("formDataArray")) || []; // Parse existing or initialize empty array
+    storedData.push({ ...formData, invoiceNo, studentID }); // Add new data
+    localStorage.setItem("formDataArray", JSON.stringify(storedData)); // Save updated array
+    /* Local Sotrage end------------------------- */
   };
 
   const genderOptions = [
@@ -314,6 +323,7 @@ const App = () => {
             <InputField
               label="Student ID"
               name="studentid"
+              type="hi"
               onChange={handleInputChange}
               value={studentID}
             />
@@ -322,7 +332,6 @@ const App = () => {
               name="amount"
               onChange={handleInputChange}
             />
-            
           </FormSection>
 
           {/* Payment Information */}
