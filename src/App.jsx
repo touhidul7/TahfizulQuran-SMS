@@ -27,92 +27,100 @@ const App = () => {
 
   const generateInvoice = (invoiceNo) => {
     const doc = new jsPDF();
-  
+
     // Generate a unique invoice number
-   
-  
+
     // Header Section
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
     doc.text("Invoice", 105, 20, { align: "center" });
-  
+
     // Company Details
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
     doc.text("Medha Bikash Shishu Niketan & Quran Academy", 20, 30);
     doc.setFont("helvetica", "normal");
-    doc.text("Hosen Nagar Road, Azizullah, Ward No. 33, Metropolis, Rangpur.", 20, 35);
+    doc.text(
+      "Hosen Nagar Road, Azizullah, Ward No. 33, Metropolis, Rangpur.",
+      20,
+      35
+    );
     doc.text("Phone: +880 1717084442", 20, 45);
     doc.text("Email: mbsn2918@gmail.com", 20, 50);
-  
+
     // Invoice Details
     doc.setFontSize(12);
     doc.text(`Invoice Number: ${invoiceNo}`, 140, 30);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 35);
-  
+
     // Separator Line
     doc.setLineWidth(0.5);
     doc.line(20, 55, 190, 55);
-  
+
     // Student and Course Information
     doc.setFont("helvetica", "bold");
     doc.text("Student Information", 20, 65);
-  
+
     doc.setFont("helvetica", "normal");
     doc.text(`Student Name: ${formData.studentNameEn || "N/A"}`, 20, 75);
     doc.text(`Student ID: ${formData.birthCertificate || "N/A"}`, 20, 85);
     doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 95);
-  
-    doc.text(`Course Name: ${formData.class || "N/A"}`, 105, 75);
+
+    doc.text(`Cass Name: ${formData.class || "N/A"}`, 105, 75);
     doc.text(`Course Fee: ${formData.feeAmount || "N/A"}`, 105, 85);
     doc.text(`Admission Date: ${formData.admissionDate || "N/A"}`, 105, 95);
-  
+
     // Table Header
     doc.setFont("helvetica", "bold");
     doc.text("Description", 20, 110);
     doc.text("Amount", 150, 110);
-  
+
     // Table Data
     doc.setFont("helvetica", "normal");
     doc.text("Course Fee", 20, 120);
-    doc.text(`${formData.feeAmount || "N/A"} BDT`, 150, 120, { align: "right" });
-  
+    doc.text(`${formData.feeAmount || "N/A"} BDT`, 150, 120, {
+      align: "right",
+    });
+
     // Separator Line
     doc.line(20, 130, 190, 130);
-  
+
     // Total
     doc.setFont("helvetica", "bold");
     doc.text("Total", 20, 140);
-    doc.text(`${formData.feeAmount || "N/A"} BDT`, 150, 140, { align: "right" });
-  
+    doc.text(`${formData.feeAmount || "N/A"} BDT`, 150, 140, {
+      align: "right",
+    });
+
     // Footer Section
     doc.setFontSize(10);
     doc.setFont("helvetica", "italic");
-    doc.text("Thank you for choosing our services.", 105, 160, { align: "center" });
-  
+    doc.text("Thank you for choosing our services.", 105, 160, {
+      align: "center",
+    });
+
     doc.save("Invoice.pdf");
   };
-  
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     // Generate Invoice Number
-    const baseString = `${formData.studentNameEn || ""}${formData.class || ""}${formData.dob || ""}`
+    const baseString = `${formData.studentNameEn || ""}${formData.class || ""}${
+      formData.dob || ""
+    }`
       .replace(/\s+/g, "") // Remove spaces
       .replace(/[^a-zA-Z0-9]/g, "") // Remove special characters
       .toUpperCase();
     const invoiceNo = baseString.substring(0, 8).padEnd(8, "X"); // Ensure it’s 8 characters long
-  
+
     // Log form data and invoice number
     console.log("Form Data:", formData);
     console.log("Invoice No:", invoiceNo);
-  
+
     // Generate Invoice
     generateInvoice(invoiceNo);
   };
-  
 
   const genderOptions = [
     { label: "Select Gender", value: "" },
@@ -252,7 +260,10 @@ const App = () => {
           </FormSection>
 
           {/* Present Address */}
-          <AddressSection title="Present Address" onChange={handleInputChange} />
+          <AddressSection
+            title="Present Address"
+            onChange={handleInputChange}
+          />
           <AddressSection
             title="Permanent Address (Same as Present Address)"
             onChange={handleInputChange}
@@ -274,7 +285,7 @@ const App = () => {
             />
             <InputField
               label="Amount"
-              name="feeAmount"
+              name="amount"
               onChange={handleInputChange}
             />
           </FormSection>
@@ -283,23 +294,23 @@ const App = () => {
           <FormSection title="Payment Information">
             <SelectField
               label="Select Payment"
-              name="paymentMethod"
+              name="paymentmethod"
               options={PaymentOptions}
               onChange={handleInputChange}
             />
             <InputField
               label="Payment Phone Number"
-              name="paymentNumber"
+              name="paymentnumber"
               onChange={handleInputChange}
             />
             <InputField
               label="Transaction ID"
-              name="trxId"
+              name="trxid"
               onChange={handleInputChange}
             />
             <InputField
               label="Admission Date"
-              name="admissionDate"
+              name="admissiondate"
               type="date"
               onChange={handleInputChange}
             />
