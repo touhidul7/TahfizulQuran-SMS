@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { jsPDF } from "jspdf";
 import InputField from "./Components/InputField";
@@ -10,7 +11,7 @@ const App = () => {
   const [formData, setFormData] = useState({});
   const [studentID, setStudentID] = useState();
   const [invoiceNumber, setInvoiceNumber] = useState('');
-
+  const [result, setResult] = useState("");
   // generate student id
   const generateNumber = () => {
     // Generate a random 6-character number
@@ -133,16 +134,48 @@ const App = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Append invoiceNo to formData
-    const finalFormData = { ...formData, invoice: invoiceNumber ,studentId:studentID, session:"2024-2025"};
-  
-    // Prepare FormData for file uploads
-    const formDataToSend = new FormData();
-    Object.entries(finalFormData).forEach(([key, value]) => {
-      formDataToSend.append(key, value);
-    });
+    // Prepare data to send via Web3Forms
+    const web3FormData = new FormData();
+    web3FormData.append("access_key", "63d92490-b288-426c-b811-46175ad3574a");
+    web3FormData.append("studentName", formData.studentNameEn || "N/A");
+    web3FormData.append("studentId", studentID || "N/A");
+    web3FormData.append("paymentMethod", formData.paymentmethod || "N/A");
+    web3FormData.append("paymentNumber", formData.pyamentnumber || "N/A");
+    web3FormData.append("transactionId", formData.trxid || "N/A");
+    web3FormData.append("className", formData.classname || "N/A");
   
     try {
+      setResult("Sending...");
+  
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: web3FormData,
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        setResult("Form Submitted Successfully");
+        toast.success("Data sent to Web3Forms!");
+        console.log("Web3Forms Response:", data);
+      } else {
+        setResult("Failed to submit the form.");
+        console.error("Web3Forms Error:", data);
+      }
+    } catch (error) {
+      setResult("An error occurred during submission.");
+      toast.error("An error occurred while sending data to Web3Forms.");
+      console.error("Web3Forms Submission Error:", error);
+    }
+  
+    // Continue with other form submissions (e.g., your API)
+    try {
+      const finalFormData = { ...formData, invoice: invoiceNumber, studentId: studentID, session: "2024-2025" };
+      const formDataToSend = new FormData();
+      Object.entries(finalFormData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
+  
       const response = await axios.post(
         "http://127.0.0.1:8000/api/students/admission",
         formDataToSend,
@@ -155,19 +188,19 @@ const App = () => {
   
       if (response.data.success) {
         toast.success("Student record created successfully!");
-        console.log("API Response:", response.data);
       } else {
         toast.error("Failed to submit the form.");
-        console.error("API Error:", response.data.errors);
       }
     } catch (error) {
-      toast.error("An error occurred during submission.");
+      toast.error("An error occurred during local submission.");
       console.error("Submission Error:", error);
     }
+  
     generateNumber();
     generateInvoiceNumber();
-    generateInvoice(invoiceNumber,studentID,formData);
+    generateInvoice(invoiceNumber, studentID, formData);
   };
+  
 
   const genderOptions = [
     { label: "Select Gender", value: "" },
@@ -207,9 +240,9 @@ const App = () => {
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center py-8">
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="bg-white w-full max-w-5xl rounded-lg shadow-lg p-6">
-        <img src="./img/Form-Heading.jpg" alt="" />
-        <form onSubmit={handleSubmit}>
+      <div className="bg-white w-full max-w-5xl rounded-lg shadow-lg p-0">
+        <img className="rounded-t-lg" src="./img/Form-Heading.jpg" alt="" />
+        <form className="p-6" onSubmit={handleSubmit}>
           {/* Student Information */}
           <FormSection title="Student Information">
             <InputField
