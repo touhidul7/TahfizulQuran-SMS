@@ -119,7 +119,7 @@ const App = () => {
     // Total
     doc.setFont("helvetica", "bold");
     doc.text("Total", 20, 140);
-    doc.text(`${formData.amount || "N/A"} BDT`, 170, 140);
+    doc.text(`${formData.amount || "N/A"} BDT`, 170, 140, { align: "right" });
   
     // Footer Section
     doc.setFontSize(10);

@@ -102,7 +102,9 @@ const App = () => {
     doc.text(`Class Name: ${formData.classname || "N/A"}`, colX, 65);
     doc.text(`Admission Fee: ${formData.amount || "N/A"}`, colX, 75);
     doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, colX, 85);
-  
+      // Separator Line
+      doc.line(20, 130, 190, 130);
+      
     // Table Header
     doc.setFont("helvetica", "bold");
     doc.text("Description", 20, 110);

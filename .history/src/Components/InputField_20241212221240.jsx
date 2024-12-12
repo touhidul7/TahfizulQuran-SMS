@@ -9,7 +9,7 @@ const InputField = ({ label, type = "text", name, placeholder, value, onChange }
       value={value}
       placeholder={placeholder}
       onChange={onChange}
-      // required
+      required
       className="w-full border rounded px-2 py-1"
     />
   </div>

@@ -38,7 +38,6 @@ const App = () => {
 
   useEffect(() => {
     generateNumber();
-    generateInvoiceNumber();
   }, []);
 
 
@@ -58,77 +57,81 @@ const App = () => {
     }));
   };
 
-  const generateInvoice = (invoiceNo, studentID, formData) => {
+  const generateInvoice = (invoiceNo) => {
     const doc = new jsPDF();
-  
+
     // Header Section
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
     doc.text("Invoice", 105, 20, { align: "center" });
-  
+
     // Company Details
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
     doc.text("Medha Bikash Shishu Niketan & Quran Academy", 20, 30);
     doc.setFont("helvetica", "normal");
-    doc.text("Hosen Nagar Road, Azizullah, Ward No. 33, Metropolis, Rangpur.", 20, 35);
+    doc.text(
+      "Hosen Nagar Road, Azizullah, Ward No. 33, Metropolis, Rangpur.",
+      20,
+      35
+    );
     doc.text("Phone: +880 1717084442", 20, 45);
     doc.text("Email: mbsn2918@gmail.com", 20, 50);
-  
-  
+    doc.setFont("helvetica", "bold");
+    doc.text(`Student ID: ${studentID}`, 150, 45);
     // Invoice Details
-    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
     doc.text(`Invoice Number: ${invoiceNo}`, 140, 30);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 35);
-    doc.text(`Student ID: ${studentID}`, 140, 40);
-  
+
     // Separator Line
     doc.setLineWidth(0.5);
     doc.line(20, 55, 190, 55);
-  
+
     // Student and Course Information
     doc.setFont("helvetica", "bold");
     doc.text("Student Information", 20, 65);
-  
+
     doc.setFont("helvetica", "normal");
-    // Aligning Student Name
     doc.text(`Student Name: ${formData.studentNameEn || "N/A"}`, 20, 75);
-    
-    // Aligning Phone Number
-    doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 85);
-  
-    // Student details in two columns
-    const colX = 150;  // Second column starts here (for aligning data)
-    doc.text(`Class Name: ${formData.classname || "N/A"}`, colX, 65);
-    doc.text(`Admission Fee: ${formData.amount || "N/A"}`, colX, 75);
-    doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, colX, 85);
-  
+
+    doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 95);
+
+    doc.text(`Class Name: ${formData.classname || "N/A"}`, 105, 75);
+    doc.text(`Admission Fee: ${formData.amount || "N/A"}`, 105, 85);
+    doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, 105, 95);
+
     // Table Header
     doc.setFont("helvetica", "bold");
     doc.text("Description", 20, 110);
-    doc.text("Amount", 170, 110 );
-  
+    doc.text("Amount", 150, 110);
+
     // Table Data
     doc.setFont("helvetica", "normal");
     doc.text("Admission Fee", 20, 120);
-    doc.text(`${formData.amount || "N/A"} BDT`, 170, 120);
-  
+    doc.text(`${formData.amount || "N/A"} BDT`, 150, 120, {
+      align: "right",
+    });
+
     // Separator Line
     doc.line(20, 130, 190, 130);
-  
+
     // Total
     doc.setFont("helvetica", "bold");
     doc.text("Total", 20, 140);
-    doc.text(`${formData.amount || "N/A"} BDT`, 170, 140);
-  
+    doc.text(`${formData.amount || "N/A"} BDT`, 150, 140, {
+      align: "right",
+    });
+
     // Footer Section
     doc.setFontSize(10);
     doc.setFont("helvetica", "italic");
-    doc.text("Thank you for choosing our services.", 105, 160, { align: "center" });
-  
+    doc.text("Thank you for choosing our services.", 105, 160, {
+      align: "center",
+    });
+
     doc.save("Invoice.pdf");
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -165,8 +168,7 @@ const App = () => {
       console.error("Submission Error:", error);
     }
     generateNumber();
-    generateInvoiceNumber();
-    generateInvoice(invoiceNumber,studentID,formData);
+    generateInvoiceNumber()
   };
 
   const genderOptions = [
@@ -262,12 +264,12 @@ const App = () => {
               name="birthCertificate"
               onChange={handleInputChange}
             />
-           {/*  <InputField
+            <InputField
               label="Birth Certificate (jpg / png support)"
               type="file"
               name="birthCertificateFile"
               onChange={handleFileChange}
-            /> */}
+            />
           </FormSection>
 
           {/* Parents Information */}
@@ -307,12 +309,12 @@ const App = () => {
               name="nid"
               onChange={handleInputChange}
             />
-            {/* <InputField
+            <InputField
               label="Parents NID (jpg / png support)"
               type="file"
               name="parentsNidFile"
               onChange={handleFileChange}
-            /> */}
+            />
           </FormSection>
 
           {/* Present Address */}

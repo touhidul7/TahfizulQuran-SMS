@@ -75,12 +75,15 @@ const App = () => {
     doc.text("Phone: +880 1717084442", 20, 45);
     doc.text("Email: mbsn2918@gmail.com", 20, 50);
   
+    // Student ID
+    doc.setFont("helvetica", "bold");
+    doc.text(`Student ID: ${studentID}`, 150, 45);
   
     // Invoice Details
     doc.setFont("helvetica", "normal");
     doc.text(`Invoice Number: ${invoiceNo}`, 140, 30);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 35);
-    doc.text(`Student ID: ${studentID}`, 140, 40);
+    doc.text(`Student ID: ${studentID}`, 140, 30);
   
     // Separator Line
     doc.setLineWidth(0.5);
@@ -98,20 +101,20 @@ const App = () => {
     doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 85);
   
     // Student details in two columns
-    const colX = 150;  // Second column starts here (for aligning data)
-    doc.text(`Class Name: ${formData.classname || "N/A"}`, colX, 65);
-    doc.text(`Admission Fee: ${formData.amount || "N/A"}`, colX, 75);
-    doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, colX, 85);
+    const colX = 105;  // Second column starts here (for aligning data)
+    doc.text(`Class Name: ${formData.classname || "N/A"}`, colX, 75);
+    doc.text(`Admission Fee: ${formData.amount || "N/A"}`, colX, 85);
+    doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, colX, 95);
   
     // Table Header
     doc.setFont("helvetica", "bold");
     doc.text("Description", 20, 110);
-    doc.text("Amount", 170, 110 );
+    doc.text("Amount", 150, 110, { align: "right" });
   
     // Table Data
     doc.setFont("helvetica", "normal");
     doc.text("Admission Fee", 20, 120);
-    doc.text(`${formData.amount || "N/A"} BDT`, 170, 120);
+    doc.text(`${formData.amount || "N/A"} BDT`, 150, 120, { align: "right" });
   
     // Separator Line
     doc.line(20, 130, 190, 130);
@@ -119,7 +122,7 @@ const App = () => {
     // Total
     doc.setFont("helvetica", "bold");
     doc.text("Total", 20, 140);
-    doc.text(`${formData.amount || "N/A"} BDT`, 170, 140);
+    doc.text(`${formData.amount || "N/A"} BDT`, 150, 140, { align: "right" });
   
     // Footer Section
     doc.setFontSize(10);

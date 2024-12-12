@@ -7,7 +7,7 @@ const SelectField = ({ label, name, options, onChange, value, required }) => (
       name={name}
       value={value} // Bind the value to formData state
       onChange={onChange}
-      // required={required===false ? false : true}
+      required={required===false ? false : true}
       className="w-full border rounded px-2 py-1"
     >
       {options.map((option, index) => (

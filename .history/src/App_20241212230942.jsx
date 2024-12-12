@@ -111,7 +111,7 @@ const App = () => {
     // Table Data
     doc.setFont("helvetica", "normal");
     doc.text("Admission Fee", 20, 120);
-    doc.text(`${formData.amount || "N/A"} BDT`, 170, 120);
+    doc.text(`${formData.amount || "N/A"} BDT`, 170, 90);
   
     // Separator Line
     doc.line(20, 130, 190, 130);
@@ -119,7 +119,7 @@ const App = () => {
     // Total
     doc.setFont("helvetica", "bold");
     doc.text("Total", 20, 140);
-    doc.text(`${formData.amount || "N/A"} BDT`, 170, 140);
+    doc.text(`${formData.amount || "N/A"} BDT`, 150, 140, { align: "right" });
   
     // Footer Section
     doc.setFontSize(10);

@@ -11,13 +11,13 @@ const PayFee = () => {
 
   const classOptions = [
     { label: "Select Class", value: "" },
-    { label: "Class 1", value: "class 1" },
-    { label: "Class 2", value: "class 2" },
-    { label: "Class 3", value: "class 3" },
-    { label: "Class 4", value: "class 4" },
-    { label: "Class 5", value: "class 5" },
-    { label: "Class 6", value: "class 6" },
-    { label: "Class 7", value: "class 7" },
+    { label: "Class 1", value: "class1" },
+    { label: "Class 2", value: "class2" },
+    { label: "Class 3", value: "class3" },
+    { label: "Class 4", value: "class4" },
+    { label: "Class 5", value: "class5" },
+    { label: "Class 6", value: "class6" },
+    { label: "Class 7", value: "class7" },
   ];
 
   const PaymentOptions = [
@@ -27,36 +27,24 @@ const PayFee = () => {
     { label: "Cash", value: "cash" },
   ];
 
-  const handleSearch = async () => {
-    try {
-      // Make a request to your API with the student ID
-      const response = await fetch(`http://127.0.0.1:8000/api/students/admission/${studentID}`);
-      
-      // Check if the response is successful
-      if (!response.ok) {
-        throw new Error("No student found with the provided ID and class.");
-      }
-  
-      // Parse the JSON response
-      const data = await response.json();
-  
-      // Assuming the structure of the response is: { student: { ...studentDetails } }
-      const foundStudent = data.student;
-  
-      // Check if the student exists and if the class matches
-      if (foundStudent && foundStudent.classname === classname) {
-        setStudentDetails(foundStudent);
-        setErrorMessage("");
-      } else {
-        setStudentDetails(null);
-        setErrorMessage("No student found with the provided ID and class.");
-      }
-    } catch (error) {
+  const handleSearch = () => {
+    // Fetch the array from localStorage
+    const storedData = JSON.parse(localStorage.getItem("formDataArray")) || [];
+
+    // Find the student by ID and class
+    const foundStudent = storedData.find(
+      (student) =>
+        student.studentid == studentID && student.classname === classname
+    );
+
+    if (foundStudent) {
+      setStudentDetails(foundStudent);
+      setErrorMessage("");
+    } else {
       setStudentDetails(null);
-      setErrorMessage(error.message || "An error occurred while fetching data.");
+      setErrorMessage("No student found with the provided ID and class.");
     }
   };
-  
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center py-8">
