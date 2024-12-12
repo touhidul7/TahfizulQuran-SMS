@@ -2,23 +2,14 @@
 import { useState } from "react";
 import SelectField from "../Components/SelectField";
 import InputField from "../Components/InputField";
-import axios from "axios";
-import toast from "react-hot-toast";
 
 const PayFee = () => {
   const [studentID, setStudentID] = useState("");
   // const [classname, setClassname] = useState("");
   const [studentDetails, setStudentDetails] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [formData, setFormData] = useState({});
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+
 
   const PaymentOptions = [
     { label: "Select Payment", value: "" },
@@ -60,38 +51,6 @@ const PayFee = () => {
 
   };
 
-  const feeHandle = async (e) =>{
-    e.preventDefault();
-    try {
-      const finalFormData = { ...formData, stdName: studentDetails.studentNameEn, roll: studentID,course: studentDetails.classname};
-      const formDataToSend = new FormData();
-      Object.entries(finalFormData).forEach(([key, value]) => {
-        formDataToSend.append(key, value);
-      });
-      console.log(formDataToSend);
-      
-  
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/students/fee",
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-  
-      if (response.data.success) {
-        toast.success("Fees Payment successfully!");
-      } else {
-        toast.error("Failed to submit the form.");
-      }
-    } catch (error) {
-      toast.error("An error occurred during local submission.");
-      console.error("Submission Error:", error);
-    }
-  }
-
 
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center py-8">
@@ -100,7 +59,6 @@ const PayFee = () => {
           Search Student Details
         </h2>
         <div>
-        <form className="p-6">
           <FormSection title="Student Information">
             <InputField
               label="Student ID"
@@ -108,7 +66,6 @@ const PayFee = () => {
               onChange={(e) => setStudentID(e.target.value)}
             />
           </FormSection>
-          </form>
           {/*  */}
         </div>
 
@@ -153,38 +110,30 @@ const PayFee = () => {
                 <div className="text-lg font-bold ">Monthly Fee</div>
                 <div className="text-lg w-64">: 1000</div>
               </div> */}
-              <form onSubmit={feeHandle}>
+              <form>
                 <FormSection title="Payment Information">
                   <SelectField
                     label="Select Payment"
                     name="pType"
                     options={PaymentOptions}
-                    onChange={handleInputChange}
                   />
                   <InputField
                     label="Payment Phone Number"
                     name="pRef"
-                    onChange={handleInputChange}
                   />
                   <InputField
                     label="Fee Amount"
                     name="amount"
-                    onChange={handleInputChange}
                   />
-                  <InputField
-                    label="Transaction ID"
-                    name="pDetails" 
-                    onChange={handleInputChange}
-                    />
+                  <InputField label="Transaction ID" name="pDetails" />
                   <InputField
                     label="Select Month"
-                    name="cDate"
+                    name="feemonth"
                     type="month"
-                    onChange={handleInputChange}
                   />
                 </FormSection>
                 <button
-                type="submit"
+                  onClick={handleSearch}
                   className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full"
                 >
                   Submit Payment

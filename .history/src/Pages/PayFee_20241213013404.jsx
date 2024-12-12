@@ -60,16 +60,13 @@ const PayFee = () => {
 
   };
 
-  const feeHandle = async (e) =>{
-    e.preventDefault();
+  const feeHandle = async () =>{
     try {
-      const finalFormData = { ...formData, stdName: studentDetails.studentNameEn, roll: studentID,course: studentDetails.classname};
+      const finalFormData = { ...formData, stdName: studentDetails.studentNameEn, roll: studentDetails.studentID };
       const formDataToSend = new FormData();
       Object.entries(finalFormData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
-      console.log(formDataToSend);
-      
   
       const response = await axios.post(
         "http://127.0.0.1:8000/api/students/fee",
@@ -100,7 +97,7 @@ const PayFee = () => {
           Search Student Details
         </h2>
         <div>
-        <form className="p-6">
+        <form className="p-6" onSubmit={feeHandle}>
           <FormSection title="Student Information">
             <InputField
               label="Student ID"
@@ -153,7 +150,7 @@ const PayFee = () => {
                 <div className="text-lg font-bold ">Monthly Fee</div>
                 <div className="text-lg w-64">: 1000</div>
               </div> */}
-              <form onSubmit={feeHandle}>
+              <form>
                 <FormSection title="Payment Information">
                   <SelectField
                     label="Select Payment"
@@ -184,7 +181,7 @@ const PayFee = () => {
                   />
                 </FormSection>
                 <button
-                type="submit"
+                  onClick={feeHandle}
                   className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full"
                 >
                   Submit Payment

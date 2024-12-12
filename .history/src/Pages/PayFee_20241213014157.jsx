@@ -63,7 +63,7 @@ const PayFee = () => {
   const feeHandle = async (e) =>{
     e.preventDefault();
     try {
-      const finalFormData = { ...formData, stdName: studentDetails.studentNameEn, roll: studentID,course: studentDetails.classname};
+      const finalFormData = { ...formData, stdName: studentDetails.studentNameEn, roll: studentID };
       const formDataToSend = new FormData();
       Object.entries(finalFormData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
@@ -153,7 +153,7 @@ const PayFee = () => {
                 <div className="text-lg font-bold ">Monthly Fee</div>
                 <div className="text-lg w-64">: 1000</div>
               </div> */}
-              <form onSubmit={feeHandle}>
+              <form>
                 <FormSection title="Payment Information">
                   <SelectField
                     label="Select Payment"
