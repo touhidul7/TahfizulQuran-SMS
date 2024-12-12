@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { jsPDF } from "jspdf";
 import InputField from "./Components/InputField";
@@ -8,6 +7,21 @@ import FormSection from "./Components/FormSection";
 
 const App = () => {
   const [formData, setFormData] = useState({});
+  const [studentID, setStudentID] = useState();
+
+  const generateNumber = () => {
+    // Generate a random 6-character number
+    const randomNumber = Math.floor(100000 + Math.random() * 900000);
+    setStudentID(randomNumber);
+  
+    // Update the student ID in formData
+    setFormData((prevData) => ({
+      ...prevData,
+      studentid: randomNumber,
+    }));
+  
+    console.log(`Generated Random Number: ${randomNumber}`);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -66,9 +80,9 @@ const App = () => {
     doc.text(`Student ID: ${formData.birthCertificate || "N/A"}`, 20, 85);
     doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 95);
 
-    doc.text(`Cass Name: ${formData.class || "N/A"}`, 105, 75);
-    doc.text(`Course Fee: ${formData.feeAmount || "N/A"}`, 105, 85);
-    doc.text(`Admission Date: ${formData.admissionDate || "N/A"}`, 105, 95);
+    doc.text(`Class Name: ${formData.classname || "N/A"}`, 105, 75);
+    doc.text(`Addmission Fee: ${formData.amount || "N/A"}`, 105, 85);
+    doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, 105, 95);
 
     // Table Header
     doc.setFont("helvetica", "bold");
@@ -77,8 +91,8 @@ const App = () => {
 
     // Table Data
     doc.setFont("helvetica", "normal");
-    doc.text("Course Fee", 20, 120);
-    doc.text(`${formData.feeAmount || "N/A"} BDT`, 150, 120, {
+    doc.text("Addmission Fee", 20, 120);
+    doc.text(`${formData.amount || "N/A"} BDT`, 150, 120, {
       align: "right",
     });
 
@@ -88,9 +102,13 @@ const App = () => {
     // Total
     doc.setFont("helvetica", "bold");
     doc.text("Total", 20, 140);
-    doc.text(`${formData.feeAmount || "N/A"} BDT`, 150, 140, {
+    doc.text(`${formData.amount || "N/A"} BDT`, 150, 140, {
       align: "right",
     });
+
+    doc.setFont("helvetica", "bold");
+    doc.text("Student ID", 20, 150);30
+    doc.text(`${studentID}`, 150, 150);
 
     // Footer Section
     doc.setFontSize(10);
@@ -104,7 +122,9 @@ const App = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (!studentID) {
+    generateNumber();
+  }
     // Generate Invoice Number
     const baseString = `${formData.studentNameEn || ""}${formData.class || ""}${
       formData.dob || ""
@@ -113,7 +133,7 @@ const App = () => {
       .replace(/[^a-zA-Z0-9]/g, "") // Remove special characters
       .toUpperCase();
     const invoiceNo = baseString.substring(0, 8).padEnd(8, "X"); // Ensure it’s 8 characters long
-
+   
     // Log form data and invoice number
     console.log("Form Data:", formData);
     console.log("Invoice No:", invoiceNo);
@@ -144,6 +164,11 @@ const App = () => {
     { label: "Select Class", value: "" },
     { label: "Class 1", value: "class1" },
     { label: "Class 2", value: "class2" },
+    { label: "Class 3", value: "class3" },
+    { label: "Class 4", value: "class4" },
+    { label: "Class 5", value: "class5" },
+    { label: "Class 6", value: "class6" },
+    { label: "Class 7", value: "class7" },
   ];
 
   const PaymentOptions = [
@@ -197,12 +222,14 @@ const App = () => {
               label="Gender"
               name="gender"
               options={genderOptions}
+              value={formData.gender}
               onChange={handleInputChange}
             />
             <SelectField
               label="Blood Group"
               name="bloodGroup"
               options={bloodGroupOptions}
+              value={formData.bloodGroup}
               onChange={handleInputChange}
             />
             <InputField
@@ -273,8 +300,9 @@ const App = () => {
           <FormSection title="Student Admission Information">
             <SelectField
               label="Select Class"
-              name="class"
+              name="classname"
               options={classOptions}
+              value={formData.classname || ""} // Pass the current value from formData
               onChange={handleInputChange}
             />
             <InputField
@@ -284,10 +312,17 @@ const App = () => {
               onChange={handleInputChange}
             />
             <InputField
+              label="Student ID"
+              name="studentid"
+              onChange={handleInputChange}
+              value={studentID}
+            />
+            <InputField
               label="Amount"
               name="amount"
               onChange={handleInputChange}
             />
+            
           </FormSection>
 
           {/* Payment Information */}
@@ -296,11 +331,12 @@ const App = () => {
               label="Select Payment"
               name="paymentmethod"
               options={PaymentOptions}
+              value={formData.paymentmethod}
               onChange={handleInputChange}
             />
             <InputField
               label="Payment Phone Number"
-              name="paymentnumber"
+              name="pyamentnumber"
               onChange={handleInputChange}
             />
             <InputField
