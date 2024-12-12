@@ -136,7 +136,7 @@ const App = () => {
   
     // Prepare data to send via Web3Forms
     const web3FormData = new FormData();
-    web3FormData.append("access_key", "63d92490-b288-426c-b811-46175ad3574a");
+    web3FormData.append("access_key", "f5d5e90f-6ea7-455b-b93a-9819968e2790");
     web3FormData.append("studentName", formData.studentNameEn || "N/A");
     web3FormData.append("studentId", studentID || "N/A");
     web3FormData.append("paymentMethod", formData.paymentmethod || "N/A");
