@@ -340,7 +340,7 @@ const PayFee = () => {
                     options={PaymentOptions}
                     onChange={handleInputChange}
                   />
-                  <div className={`${pType=="cash"?"hidden":"block"}`}>
+              
                     <InputField
                       label="Payment Phone Number"
                       name="pRef"
@@ -356,7 +356,7 @@ const PayFee = () => {
                       name="pDetails"
                       onChange={handleInputChange}
                     />
-                  </div>
+                
                 </FormSection>
                 {submitData ? (
                   "Thank You For Your Payment"
