@@ -28,9 +28,6 @@ const PayFee = () => {
     }));
   };
 
-
-
-
   const PaymentOptions = [
     { label: "Select Payment", value: "" },
     { label: "Bkash", value: "bkash" },
@@ -38,7 +35,13 @@ const PayFee = () => {
     { label: "Cash", value: "cash" },
   ];
 
-  const generateInvoice = (invoiceNo, studentID, formData, studentDetails) => {
+  const generateInvoice = (
+    invoiceNo,
+    studentID,
+    formData,
+    studentDetails,
+    date
+  ) => {
     const doc = new jsPDF();
 
     // Header Section
@@ -85,7 +88,7 @@ const PayFee = () => {
     doc.text(`Class Name: ${studentDetails.classname || "N/A"}`, colX, 65);
     doc.text(`Transaction ID: ${formData.pDetails || "N/A"}`, 140, 50);
     doc.text(`Amount of Fee: ${formData.amount || "N/A"}`, colX, 75);
-    doc.text(`Fee Month: ${formData.cDate || "N/A"}`, colX, 85);
+    doc.text(`Fee Month: ${date || "N/A"}`, colX, 85);
 
     // Table Header
     doc.setFont("helvetica", "bold");
@@ -139,7 +142,9 @@ const PayFee = () => {
 
         if (feeData.fees && feeData.fees.length > 0) {
           // Fee data found, show a message and do nothing further
-          toast.error("Fee for this student and month has already been recorded.");
+          toast.error(
+            "Fee for this student and month has already been recorded."
+          );
           setStudentDetails(null);
           return;
         }
@@ -173,12 +178,8 @@ const PayFee = () => {
       toast.error("An error occurred while fetching data.");
       setStudentDetails(null);
     }
-    setSubmitData(false)
+    setSubmitData(false);
   };
-
-
-
-
 
   // collect feeeeeee ###########################
 
@@ -225,7 +226,7 @@ const PayFee = () => {
         stdName: studentDetails.studentNameEn,
         roll: studentID,
         course: studentDetails.classname,
-        cDate: date
+        cDate: date,
       };
       const formDataToSend = new FormData();
       Object.entries(finalFormData).forEach(([key, value]) => {
@@ -245,7 +246,13 @@ const PayFee = () => {
 
       if (response.data.success) {
         toast.success("Fees Payment successfully!");
-        generateInvoice(invoiceNumber, studentID, formData, studentDetails);
+        generateInvoice(
+          invoiceNumber,
+          studentID,
+          formData,
+          studentDetails,
+          date
+        );
       } else {
         toast.error("Failed to submit the form.");
       }
@@ -255,7 +262,7 @@ const PayFee = () => {
     }
 
     generateInvoiceNumber();
-    setSubmitData(true)
+    setSubmitData(true);
   };
 
   return (
@@ -333,32 +340,34 @@ const PayFee = () => {
                     options={PaymentOptions}
                     onChange={handleInputChange}
                   />
-                  <InputField
-                    label="Payment Phone Number"
-                    name="pRef"
-                    onChange={handleInputChange}
-                  />
-                  <InputField
-                    label="Fee Amount"
-                    name="amount"
-                    onChange={handleInputChange}
-                  />
-                  <InputField
-                    label="Transaction ID"
-                    name="pDetails"
-                    onChange={handleInputChange}
-                  />
-
+                  <div className={`${pType=="cash"?"hidden":"block"}`}>
+                    <InputField
+                      label="Payment Phone Number"
+                      name="pRef"
+                      onChange={handleInputChange}
+                    />
+                    <InputField
+                      label="Fee Amount"
+                      name="amount"
+                      onChange={handleInputChange}
+                    />
+                    <InputField
+                      label="Transaction ID"
+                      name="pDetails"
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </FormSection>
-                {
-                  submitData ? 'Thank You For Your Payment' : <button
+                {submitData ? (
+                  "Thank You For Your Payment"
+                ) : (
+                  <button
                     type="submit"
                     className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full"
                   >
                     Submit Payment
                   </button>
-                }
-
+                )}
               </form>
             </div>
           )}

@@ -7,6 +7,7 @@ const NoticeBoard = () => {
   const [noticeboard,setNoticeboard] = useState([])
 
   const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
+  // const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
 
   useEffect(()=>{
     axios.get(`${backendApiUrl}/getResult`)
@@ -19,34 +20,7 @@ const NoticeBoard = () => {
     })
   },[])
 
- /*  const noticeboard = [
-    {
-      title: "মধ্যবর্তী পরীক্ষার সময়সূচি প্রকাশিত",
-      link: "https://schoolwebsite.com/notices/mid-term-exam-schedule",
-      date: "২০২৪-১২-১০",
-    },
-    {
-      title: "অভিভাবক-শিক্ষক সভার স্মরণিকার বার্তা",
-      link: "https://schoolwebsite.com/notices/parent-teacher-meeting",
-      date: "২০২৪-১২-০৮",
-    },
-    {
-      title: "শীতকালীন ছুটির ঘোষণা",
-      link: "https://schoolwebsite.com/notices/winter-vacation",
-      date: "২০২৪-১২-১৫",
-    },
-    {
-      title: "বার্ষিক ক্রীড়া প্রতিযোগিতার নিবন্ধন শুরু",
-      link: "https://schoolwebsite.com/notices/sports-day-registration",
-      date: "২০২৪-১২-১২",
-    },
-    {
-      title: "বিজ্ঞান মেলার নির্দেশিকা",
-      link: "https://schoolwebsite.com/notices/science-fair-guidelines",
-      date: "২০২৪-১২-০৫",
-    },
-  ]; */
-
+ 
   return (
     <div className="py-16">
       <ul className="w-full divide-y px-40 divide-gray-200">
