@@ -30,7 +30,7 @@ const PayFee = () => {
     { label: "Cash", value: "cash" },
   ];
 
-  const generateInvoice = (invoiceNo, studentID, formData) => {
+  const generateInvoice = (invoiceNo, studentID, formData, studentDetails) => {
     const doc = new jsPDF();
 
     // Header Section
@@ -67,16 +67,17 @@ const PayFee = () => {
 
     doc.setFont("helvetica", "normal");
     // Aligning Student Name
-    doc.text(`Student Name: ${formData.studentNameEn || "N/A"}`, 20, 75);
+    doc.text(`Student Name: ${studentDetails.studentNameEn || "N/A"}`, 20, 75);
 
     // Aligning Phone Number
-    doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 85);
+    doc.text(`Phone: ${studentDetails.motherMobile || "N/A"}`, 20, 85);
 
     // Student details in two columns
     const colX = 150; // Second column starts here (for aligning data)
-    doc.text(`Class Name: ${formData.classname || "N/A"}`, colX, 65);
-    doc.text(`Admission Fee: ${formData.amount || "N/A"}`, colX, 75);
-    doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, colX, 85);
+    doc.text(`Class Name: ${studentDetails.classname || "N/A"}`, colX, 65);
+    doc.text(`Transaction ID: ${formData.pRef || "N/A"}`, colX, 50);
+    doc.text(`Amount of Fee: ${formData.amount || "N/A"}`, colX, 75);
+    doc.text(`Fee Month: ${formData.cDate || "N/A"}`, colX, 85);
 
     // Table Header
     doc.setFont("helvetica", "bold");
@@ -85,7 +86,7 @@ const PayFee = () => {
 
     // Table Data
     doc.setFont("helvetica", "normal");
-    doc.text("Admission Fee", 20, 120);
+    doc.text("Amount of Fee", 20, 120);
     doc.text(`${formData.amount || "N/A"} BDT`, 170, 120);
 
     // Separator Line
@@ -222,7 +223,7 @@ const PayFee = () => {
 
       if (response.data.success) {
         toast.success("Fees Payment successfully!");
-        generateInvoice(invoiceNumber, studentID, formData);
+        generateInvoice(invoiceNumber, studentID, formData, studentDetails);
       } else {
         toast.error("Failed to submit the form.");
       }
