@@ -17,7 +17,7 @@ const Login = ({fuction}) => {
       <div className="justify-center items-center w-full card lg:flex max-w-md">
         <div className="w-full card-body">
           <a href="../" className="py-4 block">
-            <img src="/public/logo.jpg" alt="Logo" className="mx-auto w-24" />
+            <img src="/logo.jpg" alt="Logo" className="mx-auto w-24" />
           </a>
           <p className="mb-4 text-gray-400 text-sm text-center">
             মেধা বিকাশ শিশু নিকেতন এন্ড কুরআন একাডেমি
