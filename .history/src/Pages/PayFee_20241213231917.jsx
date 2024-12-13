@@ -10,7 +10,7 @@ import jsPDF from "jspdf";
 const PayFee = () => {
   const [studentID, setStudentID] = useState("");
   const [date, setDate] = useState("");
-  const [submitData, setSubmitData] = useState(false);
+  const [submitData, setSubmitData] = useState(true);
 
 
   const [result, setResult] = useState("");
@@ -172,7 +172,6 @@ const PayFee = () => {
       toast.error("An error occurred while fetching data.");
       setStudentDetails(null);
     }
-    setSubmitData(false)
   };
 
 
@@ -254,7 +253,7 @@ const PayFee = () => {
     }
 
     generateInvoiceNumber();
-    setSubmitData(true)
+    setSubmitData(false)
   };
 
   return (

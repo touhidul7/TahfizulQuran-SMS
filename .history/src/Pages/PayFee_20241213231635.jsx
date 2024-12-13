@@ -10,7 +10,7 @@ import jsPDF from "jspdf";
 const PayFee = () => {
   const [studentID, setStudentID] = useState("");
   const [date, setDate] = useState("");
-  const [submitData, setSubmitData] = useState(false);
+  const [submitData, setSubmitData] = useState(true);
 
 
   const [result, setResult] = useState("");
@@ -132,10 +132,10 @@ const PayFee = () => {
       const feeResponse = await fetch(
         `http://192.168.1.9:8000/api/getStudent/fee/${studentID}/${date}`
       );
-
+  
       if (feeResponse.ok) {
         const feeData = await feeResponse.json();
-
+  
         if (feeData.fees && feeData.fees.length > 0) {
           // Fee data found, show a message and do nothing further
           toast.error("Fee for this student and month has already been recorded.");
@@ -143,21 +143,21 @@ const PayFee = () => {
           return;
         }
       }
-
+  
       // If no fee data found, load the student admission data
       const admissionResponse = await fetch(
         `http://192.168.1.9:8000/api/students/admission/${studentID}`
       );
-
+  
       if (!admissionResponse.ok) {
         // Handle case where no student data is found
         toast.error("No student data found with the provided ID.");
         setStudentDetails(null);
         return;
       }
-
+  
       const admissionData = await admissionResponse.json();
-
+  
       if (admissionData.student) {
         // Successfully retrieved student admission data
         setStudentDetails(admissionData.student);
@@ -172,12 +172,11 @@ const PayFee = () => {
       toast.error("An error occurred while fetching data.");
       setStudentDetails(null);
     }
-    setSubmitData(false)
   };
-
-
-
-
+  
+  
+  
+  
 
   // collect feeeeeee ###########################
 
@@ -254,7 +253,6 @@ const PayFee = () => {
     }
 
     generateInvoiceNumber();
-    setSubmitData(true)
   };
 
   return (
@@ -347,17 +345,14 @@ const PayFee = () => {
                     name="pDetails"
                     onChange={handleInputChange}
                   />
-
+                 
                 </FormSection>
-                {
-                  submitData ? 'Thank You For Your Payment' : <button
-                    type="submit"
-                    className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full"
-                  >
-                    Submit Payment
-                  </button>
-                }
-
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full"
+                >
+                  Submit Payment
+                </button>
               </form>
             </div>
           )}

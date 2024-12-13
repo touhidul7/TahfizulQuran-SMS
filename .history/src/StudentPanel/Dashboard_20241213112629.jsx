@@ -2,12 +2,11 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import { Toaster } from "react-hot-toast";
 
-// eslint-disable-next-line react/prop-types
-const Dashboard = ({data}) => {
+const Dashboard = () => {
     return (
         <div>
              <Toaster position="top-center" reverseOrder={false} />
-            <div className="mb-10"><Navbar data={data}/></div>
+            <div className="mb-10"><Navbar/></div>
             <Outlet/>
         </div>
     );

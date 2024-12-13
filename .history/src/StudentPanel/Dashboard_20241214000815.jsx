@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import { Toaster } from "react-hot-toast";
 
-// eslint-disable-next-line react/prop-types
 const Dashboard = ({data}) => {
     return (
         <div>

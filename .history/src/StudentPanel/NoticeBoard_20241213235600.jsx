@@ -56,15 +56,15 @@ const NoticeBoard = () => {
                 <img className="w-8 h-8 rounded-full" src={docimage} alt="Notice" />
               </div>
               <div className="flex-1 min-w-0 w-full">
-               
+                <Link to={notice.link}>
                   <p className="text-sm font-medium text-gray-900 truncate">
-                    {notice.name}
+                    {notice.rFile}
                   </p>
-                
+                </Link>
                 <p className="text-sm text-gray-500 truncate">{notice.date}</p>
               </div>
               <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                <a href={`http://192.168.1.9:8000/admin/result/${notice.rFile}`} target="_blank">
+                <a href={`http://192.168.1.9:8000/${notice.rFile}`}>
                   <img className="w-7" src={downloadicon} alt="Download" />
                 </a>
               </div>

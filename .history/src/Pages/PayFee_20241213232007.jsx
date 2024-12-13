@@ -172,7 +172,6 @@ const PayFee = () => {
       toast.error("An error occurred while fetching data.");
       setStudentDetails(null);
     }
-    setSubmitData(false)
   };
 
 

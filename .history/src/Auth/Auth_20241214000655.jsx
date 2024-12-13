@@ -16,7 +16,6 @@ const Auth = () => {
         if (response.data.student.length != 0) {
           setUser(true);
           toast.success("Successfully Logged In!");
-          setData(response.data.student)
         }
       })
       .catch(function (error) {
@@ -31,7 +30,7 @@ const Auth = () => {
 
 
   return user ? (
-    <Dashboard data={data}/>
+    <Dashboard />
   ) : (
     <>
       <Login fuction={handleLogin} />

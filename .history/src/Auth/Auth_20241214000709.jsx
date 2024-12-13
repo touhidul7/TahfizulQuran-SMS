@@ -13,10 +13,10 @@ const Auth = () => {
 
     axios.get(`http://192.168.1.9:8000/api/students/admission/${username}`)
       .then(function (response) {
+        setData(response.data.student)
         if (response.data.student.length != 0) {
           setUser(true);
           toast.success("Successfully Logged In!");
-          setData(response.data.student)
         }
       })
       .catch(function (error) {
@@ -31,7 +31,7 @@ const Auth = () => {
 
 
   return user ? (
-    <Dashboard data={data}/>
+    <Dashboard />
   ) : (
     <>
       <Login fuction={handleLogin} />

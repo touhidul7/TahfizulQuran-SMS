@@ -31,7 +31,7 @@ const Auth = () => {
 
 
   return user ? (
-    <Dashboard data={data}/>
+    <Dashboard />
   ) : (
     <>
       <Login fuction={handleLogin} />

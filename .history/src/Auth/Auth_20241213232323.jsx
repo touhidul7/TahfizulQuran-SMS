@@ -6,7 +6,6 @@ import axios from "axios";
 
 const Auth = () => {
   const [user, setUser] = useState(null);
-  const [data,setData] = useState([])
   // login handler
 
   function handleLogin({ username }) {
@@ -16,7 +15,6 @@ const Auth = () => {
         if (response.data.student.length != 0) {
           setUser(true);
           toast.success("Successfully Logged In!");
-          setData(response.data.student)
         }
       })
       .catch(function (error) {
@@ -31,7 +29,7 @@ const Auth = () => {
 
 
   return user ? (
-    <Dashboard data={data}/>
+    <Dashboard />
   ) : (
     <>
       <Login fuction={handleLogin} />
