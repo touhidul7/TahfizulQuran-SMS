@@ -15,20 +15,26 @@ const Auth = () => {
   function handleLogin({ username }) {
 
     axios.get(`http://192.168.1.9:8000/api/students/admission/${username}`)
-      .then(function (response) {
-        if (response.data.student.length != 0) {
-          setUser(true);
-          toast.success("Successfully Logged In!");
-        }
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-        setUser(null);
-        toast.error("Wrong Username or Password");
-      })
+    .then(function (response) {
+      // handle success
+      setCheckData(response.data.student);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
 
+    // check login
 
+    if (checkData.length !=0) {
+      setUser(true);
+      toast.success("Successfully Logged In!");
+    } else {
+      console.log('heelo');
+      
+      setUser(null);
+      toast.error("Wrong Username or Password");
+    }
   }
 
 
@@ -37,7 +43,7 @@ const Auth = () => {
   ) : (
     <>
       <Login fuction={handleLogin} />
-      <Toaster />
+      <Toaster/>
     </>
   );
 };

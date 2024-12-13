@@ -1,34 +1,40 @@
 import { useEffect, useState } from "react";
 import Dashboard from "../StudentPanel/Dashboard";
 import Login from "../StudentPanel/Login";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import axios from "axios";
 
 const Auth = () => {
   const [user, setUser] = useState(null);
   const [studentId, setStudentId] = useState();
-  const [checkData, setCheckData] = useState([])
 
-
-  // login handler
-
-  function handleLogin({ username }) {
-
-    axios.get(`http://192.168.1.9:8000/api/students/admission/${username}`)
+  // GET request for remote image in node.js
+  useEffect(() => {
+    axios.get(`http://192.168.1.9:8000/api/students/admission/${studentId}`)
       .then(function (response) {
-        if (response.data.student.length != 0) {
-          setUser(true);
-          toast.success("Successfully Logged In!");
-        }
+        // handle success
+        console.log(response);
       })
       .catch(function (error) {
         // handle error
         console.log(error);
-        setUser(null);
-        toast.error("Wrong Username or Password");
       })
+  }, [studentId, user])
 
 
+
+  function handleLogin({ username }) {
+    // get userId
+    setStudentId(username)
+
+    /* if (username === "1234") {
+
+      setUser(true);
+      toast.success("Successfully Logged In!");
+    } else {
+      setUser(null);
+      toast.error("Wrong Username or Password");
+    } */
   }
 
 
@@ -37,7 +43,6 @@ const Auth = () => {
   ) : (
     <>
       <Login fuction={handleLogin} />
-      <Toaster />
     </>
   );
 };

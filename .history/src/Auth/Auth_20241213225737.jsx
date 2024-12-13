@@ -16,16 +16,21 @@ const Auth = () => {
 
     axios.get(`http://192.168.1.9:8000/api/students/admission/${username}`)
       .then(function (response) {
+
+
         if (response.data.student.length != 0) {
           setUser(true);
           toast.success("Successfully Logged In!");
+        } else {
+          console.log('heelo');
+
+          setUser(null);
+          toast.error("Wrong Username or Password");
         }
       })
       .catch(function (error) {
         // handle error
         console.log(error);
-        setUser(null);
-        toast.error("Wrong Username or Password");
       })
 
 
