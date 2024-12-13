@@ -29,6 +29,7 @@ const PayFee = () => {
   ];
 
   const handleSearch = async () => {
+    toast("searching...");
     try {
       // Make a request to your API with the student ID
       const response = await fetch(`http://127.0.0.1:8000/api/students/admission/${studentID}`);
@@ -48,6 +49,7 @@ const PayFee = () => {
       // Check if the student exists and if the class matches
       if (foundStudent) {
         setStudentDetails(foundStudent);
+        toast.success("Student Data Loaded Successfuly!");
         setErrorMessage("");
       } else {
         setStudentDetails(null);
@@ -64,6 +66,7 @@ const PayFee = () => {
   // collect feeeeeee ###########################
 
   const feeHandle = async (e) =>{
+    toast("Submiting Fee Request...");
     e.preventDefault();
      // Prepare data to send via Web3Forms
      const web3FormData = new FormData();
@@ -90,6 +93,7 @@ const PayFee = () => {
          setResult("Form Submitted Successfully");
          toast.success("Data sent to Web3Forms!");
          console.log("Web3Forms Response:", data);
+         
        } else {
          setResult("Failed to submit the form.");
          console.error("Web3Forms Error:", data);
