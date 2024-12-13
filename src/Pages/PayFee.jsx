@@ -75,7 +75,7 @@ const PayFee = () => {
     // Student details in two columns
     const colX = 150; // Second column starts here (for aligning data)
     doc.text(`Class Name: ${studentDetails.classname || "N/A"}`, colX, 65);
-    doc.text(`Transaction ID: ${formData.pRef || "N/A"}`, colX, 50);
+    doc.text(`Transaction ID: ${formData.pDetails || "N/A"}`, 140, 50);
     doc.text(`Amount of Fee: ${formData.amount || "N/A"}`, colX, 75);
     doc.text(`Fee Month: ${formData.cDate || "N/A"}`, colX, 85);
 
