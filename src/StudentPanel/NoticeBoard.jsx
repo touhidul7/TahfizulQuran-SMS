@@ -1,14 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 const NoticeBoard = () => {
   const docimage = "https://cdn-icons-png.flaticon.com/128/2991/2991108.png";
   const downloadicon = "https://cdn-icons-png.flaticon.com/128/9131/9131795.png";
   const [noticeboard,setNoticeboard] = useState([])
 
+  const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(()=>{
-    axios.get(`http://192.168.1.9:8000/api/getResult`)
+    axios.get(`${backendApiUrl}/getResult`)
     .then(function (response) {
       setNoticeboard(response.data.data)
     })

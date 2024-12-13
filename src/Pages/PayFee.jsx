@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
@@ -11,7 +12,7 @@ const PayFee = () => {
   const [studentID, setStudentID] = useState("");
   const [date, setDate] = useState("");
   const [submitData, setSubmitData] = useState(false);
-
+  const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [result, setResult] = useState("");
   // const [classname, setClassname] = useState("");
@@ -130,7 +131,7 @@ const PayFee = () => {
     try {
       // First, check if fee data exists for the given student ID and date
       const feeResponse = await fetch(
-        `http://192.168.1.9:8000/api/getStudent/fee/${studentID}/${date}`
+        `${backendApiUrl}/getStudent/fee/${studentID}/${date}`
       );
 
       if (feeResponse.ok) {
@@ -146,7 +147,7 @@ const PayFee = () => {
 
       // If no fee data found, load the student admission data
       const admissionResponse = await fetch(
-        `http://192.168.1.9:8000/api/students/admission/${studentID}`
+        `${backendApiUrl}/students/admission/${studentID}`
       );
 
       if (!admissionResponse.ok) {
@@ -233,7 +234,7 @@ const PayFee = () => {
       console.log(formDataToSend);
 
       const response = await axios.post(
-        "http://192.168.1.9:8000/api/students/fee",
+        `${backendApiUrl}/students/fee`,
         formDataToSend,
         {
           headers: {

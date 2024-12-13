@@ -13,6 +13,7 @@ const App = () => {
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [result, setResult] = useState("");
 
+  const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
   /*  */
   const [classes, setClasses] = useState([]); // State to store the fetched data
   const [error, setError] = useState(null); // State to handle any errors
@@ -39,7 +40,7 @@ const App = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch("http://192.168.1.9:8000/api/getClass");
+        const response = await fetch(`${backendApiUrl}/getClass`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -218,7 +219,7 @@ const App = () => {
       });
 
       const response = await axios.post(
-        "http://192.168.1.9:8000/api/students/admission",
+        `${backendApiUrl}students/admission`,
         formDataToSend,
         {
           headers: {

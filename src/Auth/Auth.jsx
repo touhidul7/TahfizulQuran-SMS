@@ -8,10 +8,11 @@ const Auth = () => {
   const [user, setUser] = useState(null);
   const [data,setData] = useState([])
   // login handler
+  const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
 
   function handleLogin({ username }) {
 
-    axios.get(`http://192.168.1.9:8000/api/students/admission/${username}`)
+    axios.get(`${backendApiUrl}/students/admission/${username}`)
       .then(function (response) {
         if (response.data.student.length != 0) {
           setUser(true);
