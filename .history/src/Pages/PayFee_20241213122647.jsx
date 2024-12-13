@@ -123,56 +123,98 @@ const PayFee = () => {
   }, []);
 
   const handleSearch = async () => {
+
+    // find student
     try {
-      // First, check if fee data exists for the given student ID and date
-      const feeResponse = await fetch(
+      // Make a request to your API with the student ID
+      const response = await fetch(
         `http://127.0.0.1:8000/api/getStudent/fee/${studentID}/${date}`
       );
-  
-      if (feeResponse.ok) {
-        const feeData = await feeResponse.json();
-  
-        if (feeData.fees && feeData.fees.length > 0) {
-          // Fee data found, show a message and do nothing further
-          toast.error("Fee for this student and month has already been recorded.");
-          setStudentDetails(null);
-          return;
-        }
+
+      // Check if the response is successful
+      if (!response.ok) {
+        toast.error("No student found with the provided ID and class.");
+        throw new Error("No student found with the provided ID and class.");
       }
-  
-      // If no fee data found, load the student admission data
-      const admissionResponse = await fetch(
+
+      // Parse the JSON response
+      const data = await response.json();
+      // Assuming the structure of the response is: { student: { ...studentDetails } }
+      const checkStudent = data.fees;
+      console.log(checkStudent);
+      // Check if the student exists and if the class matches
+      if (checkStudent) {
+        setCheckDate(checkStudent);
+
+        setErrorMessage("");
+      } else {
+        setCheckDate(null);
+
+        setErrorMessage("No student found with the provided ID and class.");
+      }
+
+
+
+    } catch (error) {
+      console.log(error);
+
+    }
+
+    console.log(checkDate);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    toast("searching...");
+    try {
+      // Make a request to your API with the student ID
+      const response = await fetch(
         `http://127.0.0.1:8000/api/students/admission/${studentID}`
       );
-  
-      if (!admissionResponse.ok) {
-        // Handle case where no student data is found
-        toast.error("No student data found with the provided ID.");
-        setStudentDetails(null);
-        return;
+
+      // Check if the response is successful
+      if (!response.ok) {
+        toast.error("No student found with the provided ID and class.");
+        throw new Error("No student found with the provided ID and class.");
       }
-  
-      const admissionData = await admissionResponse.json();
-  
-      if (admissionData.student) {
-        // Successfully retrieved student admission data
-        setStudentDetails(admissionData.student);
-        toast.success("Student admission details loaded successfully!");
+
+      // Parse the JSON response
+      const data = await response.json();
+
+      // Assuming the structure of the response is: { student: { ...studentDetails } }
+      const foundStudent = data.student;
+      // Check if the student exists and if the class matches
+      if (foundStudent) {
+        setStudentDetails(foundStudent);
+        toast.success("Student Data Loaded Successfuly!");
+        setErrorMessage("");
       } else {
-        // No student data returned
-        toast.error("No data found for the provided ID.");
         setStudentDetails(null);
+        toast.error("No student found with the provided ID and class.");
+        setErrorMessage("No student found with the provided ID and class.");
       }
     } catch (error) {
-      console.error("Error occurred during search:", error);
-      toast.error("An error occurred while fetching data.");
       setStudentDetails(null);
+      toast.error("No student found with the provided ID and class.");
+      setErrorMessage(
+        error.message || "An error occurred while fetching data."
+      );
     }
+    console.log(studentDetails);
   };
-  
-  
-  
-  
 
   // collect feeeeeee ###########################
 
@@ -219,7 +261,6 @@ const PayFee = () => {
         stdName: studentDetails.studentNameEn,
         roll: studentID,
         course: studentDetails.classname,
-        cDate: date
       };
       const formDataToSend = new FormData();
       Object.entries(finalFormData).forEach(([key, value]) => {
@@ -341,7 +382,12 @@ const PayFee = () => {
                     name="pDetails"
                     onChange={handleInputChange}
                   />
-                 
+                  <InputField
+                    label="Select Month"
+                    name="cDate"
+                    type="month"
+                    onChange={handleInputChange}
+                  />
                 </FormSection>
                 <button
                   type="submit"

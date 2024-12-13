@@ -219,7 +219,6 @@ const PayFee = () => {
         stdName: studentDetails.studentNameEn,
         roll: studentID,
         course: studentDetails.classname,
-        cDate: date
       };
       const formDataToSend = new FormData();
       Object.entries(finalFormData).forEach(([key, value]) => {
@@ -341,7 +340,12 @@ const PayFee = () => {
                     name="pDetails"
                     onChange={handleInputChange}
                   />
-                 
+                  <InputField
+                    label="Select Month"
+                    name="cDate"
+                    type="month"
+                    onChange={handleInputChange}
+                  />
                 </FormSection>
                 <button
                   type="submit"
