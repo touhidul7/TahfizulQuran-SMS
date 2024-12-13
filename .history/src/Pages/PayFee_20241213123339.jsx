@@ -124,44 +124,52 @@ const PayFee = () => {
 
   const handleSearch = async () => {
     try {
-      // First, check if fee data exists for the given student ID and date
-      const feeResponse = await fetch(
+      // Call the first API to check if the student and month exist
+      const response = await fetch(
         `http://127.0.0.1:8000/api/getStudent/fee/${studentID}/${date}`
       );
   
-      if (feeResponse.ok) {
-        const feeData = await feeResponse.json();
-  
-        if (feeData.fees && feeData.fees.length > 0) {
-          // Fee data found, show a message and do nothing further
-          toast.error("Fee for this student and month has already been recorded.");
-          setStudentDetails(null);
-          return;
-        }
-      }
-  
-      // If no fee data found, load the student admission data
-      const admissionResponse = await fetch(
-        `http://127.0.0.1:8000/api/students/admission/${studentID}`
-      );
-  
-      if (!admissionResponse.ok) {
-        // Handle case where no student data is found
-        toast.error("No student data found with the provided ID.");
+      if (!response.ok) {
+        // If the response is not OK, show an error message
+        toast.error("No data found for the provided ID and month.");
         setStudentDetails(null);
         return;
       }
   
-      const admissionData = await admissionResponse.json();
+      const data = await response.json();
+      const fees = data.fees;
   
-      if (admissionData.student) {
-        // Successfully retrieved student admission data
-        setStudentDetails(admissionData.student);
-        toast.success("Student admission details loaded successfully!");
+      if (fees && fees.length > 0) {
+        // If fees data is found, process and set the result
+        console.log("Fees data:", fees);
+        setStudentDetails(fees[0]); // Assuming you want to use the first record
+        toast.success("Student fee details loaded successfully!");
       } else {
-        // No student data returned
-        toast.error("No data found for the provided ID.");
-        setStudentDetails(null);
+        // If no fees data is found, call the second API for admission details
+        console.log("No fees found, checking admission details...");
+  
+        const admissionResponse = await fetch(
+          `http://127.0.0.1:8000/api/students/admission/${studentID}`
+        );
+  
+        if (!admissionResponse.ok) {
+          toast.error("No student data found with the provided ID.");
+          setStudentDetails(null);
+          return;
+        }
+  
+        const admissionData = await admissionResponse.json();
+        const student = admissionData.student;
+  
+        if (student) {
+          // If student admission data is found, set it in state
+          setStudentDetails(student);
+          toast.success("Student admission details loaded successfully!");
+        } else {
+          // If no student admission data is found
+          toast.error("No data found for the provided ID.");
+          setStudentDetails(null);
+        }
       }
     } catch (error) {
       console.error("Error occurred during search:", error);
@@ -169,9 +177,6 @@ const PayFee = () => {
       setStudentDetails(null);
     }
   };
-  
-  
-  
   
 
   // collect feeeeeee ###########################
