@@ -39,7 +39,7 @@ const NoticeBoard = () => {
                 <p className="text-sm text-gray-500 truncate">{notice.date}</p>
               </div>
               <div className="inline-flex items-center text-base font-semibold text-gray-900">
-                <a href={`http://192.168.1.9:8000/admin/result/${notice.rFile}`} target="_blank">
+                <a href={`https://mbsn-sms.webgive.net/admin/result/${notice.rFile}`} target="_blank">
                   <img className="w-7" src={downloadicon} alt="Download" />
                 </a>
               </div>
