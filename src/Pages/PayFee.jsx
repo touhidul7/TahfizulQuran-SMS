@@ -12,6 +12,7 @@ const PayFee = () => {
   const [date, setDate] = useState("");
   const [checkDate, setCheckDate] = useState("");
 
+
   const [result, setResult] = useState("");
   // const [classname, setClassname] = useState("");
   const [studentDetails, setStudentDetails] = useState(null);
@@ -25,6 +26,9 @@ const PayFee = () => {
       [name]: value,
     }));
   };
+
+
+
 
   const PaymentOptions = [
     { label: "Select Payment", value: "" },
@@ -126,7 +130,7 @@ const PayFee = () => {
     try {
       // First, check if fee data exists for the given student ID and date
       const feeResponse = await fetch(
-        `http://127.0.0.1:8000/api/getStudent/fee/${studentID}/${date}`
+        `http://192.168.1.9:8000/api/getStudent/fee/${studentID}/${date}`
       );
   
       if (feeResponse.ok) {
@@ -142,7 +146,7 @@ const PayFee = () => {
   
       // If no fee data found, load the student admission data
       const admissionResponse = await fetch(
-        `http://127.0.0.1:8000/api/students/admission/${studentID}`
+        `http://192.168.1.9:8000/api/students/admission/${studentID}`
       );
   
       if (!admissionResponse.ok) {
@@ -193,7 +197,7 @@ const PayFee = () => {
     try {
       setResult("Sending...");
 
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("http://api.web3forms.com/submit", {
         method: "POST",
         body: web3FormData,
       });
@@ -228,7 +232,7 @@ const PayFee = () => {
       console.log(formDataToSend);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/students/fee",
+        "http://192.168.1.9:8000/api/students/fee",
         formDataToSend,
         {
           headers: {

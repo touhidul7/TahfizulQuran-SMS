@@ -4,7 +4,7 @@ import Login from "../StudentPanel/Login";
 import toast from "react-hot-toast";
 
 const Auth = () => {
-    const [user, setUser] = useState(true);
+    const [user, setUser] = useState(null);
 
 
 

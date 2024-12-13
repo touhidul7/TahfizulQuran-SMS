@@ -10,8 +10,14 @@ import axios from "axios";
 const App = () => {
   const [formData, setFormData] = useState({});
   const [studentID, setStudentID] = useState();
-  const [invoiceNumber, setInvoiceNumber] = useState('');
+  const [invoiceNumber, setInvoiceNumber] = useState("");
   const [result, setResult] = useState("");
+
+  /*  */
+  const [classes, setClasses] = useState([]); // State to store the fetched data
+  const [error, setError] = useState(null); // State to handle any errors
+  const [loading, setLoading] = useState(true);
+
   // generate student id
   const generateNumber = () => {
     // Generate a random 6-character number
@@ -26,12 +32,39 @@ const App = () => {
 
     console.log(`Generated Random Number: ${randomNumber}`);
   };
+  console.log(classes);
+
+  /* Fetch class data */
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const response = await fetch("http://192.168.1.9:8000/api/getClass");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json(); // Assuming the API returns JSON
+        setClasses(data); // Update state with the fetched data
+      } catch (error) {
+        setError(error.message); // Handle errors
+        console.log(error.message);
+      } finally {
+        setLoading(false); // Set loading to false after fetching
+      }
+    };
+
+    fetchClasses();
+  }, []);
+
+  console.log("dd", classes);
+
+  /* Fetch class data end */
 
   // generate random number
 
   const generateInvoiceNumber = () => {
     const date = new Date();
-    const dateString = date.toISOString().split('T')[0].replace(/-/g, ''); // YYYYMMDD format
+    const dateString = date.toISOString().split("T")[0].replace(/-/g, ""); // YYYYMMDD format
     const randomNum = Math.floor(Math.random() * 10000); // Generates a random 4-digit number
     const newInvoiceNumber = `INV-${dateString}-${randomNum}`;
     setInvoiceNumber(newInvoiceNumber);
@@ -41,7 +74,6 @@ const App = () => {
     generateNumber();
     generateInvoiceNumber();
   }, []);
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -61,79 +93,83 @@ const App = () => {
 
   const generateInvoice = (invoiceNo, studentID, formData) => {
     const doc = new jsPDF();
-  
+
     // Header Section
     doc.setFontSize(18);
     doc.setFont("helvetica", "bold");
     doc.text("Invoice", 105, 20, { align: "center" });
-  
+
     // Company Details
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
     doc.text("Medha Bikash Shishu Niketan & Quran Academy", 20, 30);
     doc.setFont("helvetica", "normal");
-    doc.text("Hosen Nagar Road, Azizullah, Ward No. 33, Metropolis, Rangpur.", 20, 35);
+    doc.text(
+      "Hosen Nagar Road, Azizullah, Ward No. 33, Metropolis, Rangpur.",
+      20,
+      35
+    );
     doc.text("Phone: +880 1717084442", 20, 45);
     doc.text("Email: mbsn2918@gmail.com", 20, 50);
-  
-  
+
     // Invoice Details
     doc.setFont("helvetica", "normal");
     doc.text(`Invoice Number: ${invoiceNo}`, 140, 30);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 140, 35);
     doc.text(`Student ID: ${studentID}`, 140, 40);
-  
+
     // Separator Line
     doc.setLineWidth(0.5);
     doc.line(20, 55, 190, 55);
-  
+
     // Student and Course Information
     doc.setFont("helvetica", "bold");
     doc.text("Student Information", 20, 65);
-  
+
     doc.setFont("helvetica", "normal");
     // Aligning Student Name
     doc.text(`Student Name: ${formData.studentNameEn || "N/A"}`, 20, 75);
-    
+
     // Aligning Phone Number
     doc.text(`Phone: ${formData.motherMobile || "N/A"}`, 20, 85);
-  
+
     // Student details in two columns
-    const colX = 150;  // Second column starts here (for aligning data)
+    const colX = 150; // Second column starts here (for aligning data)
     doc.text(`Class Name: ${formData.classname || "N/A"}`, colX, 65);
     doc.text(`Admission Fee: ${formData.amount || "N/A"}`, colX, 75);
     doc.text(`Admission Date: ${formData.admissiondate || "N/A"}`, colX, 85);
-  
+
     // Table Header
     doc.setFont("helvetica", "bold");
     doc.text("Description", 20, 110);
-    doc.text("Amount", 170, 110 );
-  
+    doc.text("Amount", 170, 110);
+
     // Table Data
     doc.setFont("helvetica", "normal");
     doc.text("Admission Fee", 20, 120);
     doc.text(`${formData.amount || "N/A"} BDT`, 170, 120);
-  
+
     // Separator Line
     doc.line(20, 130, 190, 130);
-  
+
     // Total
     doc.setFont("helvetica", "bold");
     doc.text("Total", 20, 140);
     doc.text(`${formData.amount || "N/A"} BDT`, 170, 140);
-  
+
     // Footer Section
     doc.setFontSize(10);
     doc.setFont("helvetica", "italic");
-    doc.text("Thank you for choosing our services.", 105, 160, { align: "center" });
-  
+    doc.text("Thank you for choosing our services.", 105, 160, {
+      align: "center",
+    });
+
     doc.save("Invoice.pdf");
   };
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Prepare data to send via Web3Forms
     const web3FormData = new FormData();
     web3FormData.append("access_key", "f5d5e90f-6ea7-455b-b93a-9819968e2790");
@@ -143,17 +179,17 @@ const App = () => {
     web3FormData.append("paymentNumber", formData.pyamentnumber || "N/A");
     web3FormData.append("transactionId", formData.trxid || "N/A");
     web3FormData.append("className", formData.classname || "N/A");
-  
+
     try {
       setResult("Sending...");
-  
+
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: web3FormData,
       });
-  
+
       const data = await response.json();
-  
+
       if (data.success) {
         setResult("Form Submitted Successfully");
         toast.success("Data sent to Web3Forms!");
@@ -167,17 +203,22 @@ const App = () => {
       toast.error("An error occurred while sending data to Web3Forms.");
       console.error("Web3Forms Submission Error:", error);
     }
-  
+
     // Continue with other form submissions (e.g., your API)
     try {
-      const finalFormData = { ...formData, invoice: invoiceNumber, studentId: studentID, session: "2024-2025" };
+      const finalFormData = {
+        ...formData,
+        invoice: invoiceNumber,
+        studentId: studentID,
+        session: "2024-2025",
+      };
       const formDataToSend = new FormData();
       Object.entries(finalFormData).forEach(([key, value]) => {
         formDataToSend.append(key, value);
       });
-  
+
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/students/admission",
+        "http://192.168.1.9:8000/api/students/admission",
         formDataToSend,
         {
           headers: {
@@ -185,7 +226,7 @@ const App = () => {
           },
         }
       );
-  
+
       if (response.data.success) {
         toast.success("Student record created successfully!");
       } else {
@@ -195,12 +236,11 @@ const App = () => {
       toast.error("An error occurred during local submission.");
       console.error("Submission Error:", error);
     }
-  
+
     generateNumber();
     generateInvoiceNumber();
     generateInvoice(invoiceNumber, studentID, formData);
   };
-  
 
   const genderOptions = [
     { label: "Select Gender", value: "" },
@@ -261,7 +301,7 @@ const App = () => {
               name="studentNameBn"
               onChange={handleInputChange}
             />
-            
+
             <InputField
               label="Email (Optional)"
               requried={false}
@@ -295,7 +335,7 @@ const App = () => {
               name="birthCertificate"
               onChange={handleInputChange}
             />
-           {/*  <InputField
+            {/*  <InputField
               label="Birth Certificate (jpg / png support)"
               type="file"
               name="birthCertificateFile"
@@ -349,32 +389,79 @@ const App = () => {
           </FormSection>
 
           {/* Present Address */}
-          <FormSection title="Present Address" >
-            <InputField label="Village/House, Road" name="villagePreset" onChange={handleInputChange}/>
-            <InputField label="Post" name="postPreset" onChange={handleInputChange}/>
-            <InputField label="Thana" name="thanaPreset" onChange={handleInputChange}/>
-            <InputField label="District" name="distPreset" onChange={handleInputChange}/>
+          <FormSection title="Present Address">
+            <InputField
+              label="Village/House, Road"
+              name="villagePreset"
+              onChange={handleInputChange}
+            />
+            <InputField
+              label="Post"
+              name="postPreset"
+              onChange={handleInputChange}
+            />
+            <InputField
+              label="Thana"
+              name="thanaPreset"
+              onChange={handleInputChange}
+            />
+            <InputField
+              label="District"
+              name="distPreset"
+              onChange={handleInputChange}
+            />
           </FormSection>
 
           <FormSection title="Permanent Address">
-            <InputField label="Village/House, Road" name="villagePermanent" onChange={handleInputChange}/>
-            <InputField label="Post" name="postPermanent" onChange={handleInputChange}/>
-            <InputField label="Thana" name="thanaPermanent" onChange={handleInputChange}/>
-            <InputField label="District" name="distPermanent" onChange={handleInputChange}/>
+            <InputField
+              label="Village/House, Road"
+              name="villagePermanent"
+              onChange={handleInputChange}
+            />
+            <InputField
+              label="Post"
+              name="postPermanent"
+              onChange={handleInputChange}
+            />
+            <InputField
+              label="Thana"
+              name="thanaPermanent"
+              onChange={handleInputChange}
+            />
+            <InputField
+              label="District"
+              name="distPermanent"
+              onChange={handleInputChange}
+            />
           </FormSection>
-
-          
 
           {/* Student Admission Information */}
           <FormSection title="Student Admission Information">
-            <SelectField
+           <div>
+           <label htmlFor="classname" className="block mb-1">Select Class</label>
+           <select
+              name="classname"
+              id="classname"
+              className="w-full border rounded px-2 py-1"
+              onChange={handleInputChange}
+            >
+              <option value="">Choose </option>
+              {classes.map((item, index) => (
+                <option key={index} value={item.class}>
+                  {item.class}
+                </option>
+              ))}
+            </select>
+           </div>
+
+            {/* <SelectField
               label="Select Class"
               name="classname"
-              options={classOptions}
-              value={formData.classname || ""} // Pass the current value from formData
+              options={classes}
+              value={classes.class} // Pass the current value from formData
               onChange={handleInputChange}
-            />
-           {/*  <InputField
+            /> */}
+            {/*  <InputField
               label="Session"
               name="session"
               value="2024-2025"
