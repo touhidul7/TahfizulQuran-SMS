@@ -61,7 +61,7 @@ const IdCard = () => {
                     </table>
 
 
-                    <div className="text-xs text-gray-600 text-center">
+                    <div className="text-xs text-gray-600">
                         <p>Issued on: 01 December 2024</p>
                         <p>Valid Until: 31 December 2025</p>
                     </div>

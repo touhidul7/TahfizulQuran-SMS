@@ -1,8 +1,14 @@
-/* eslint-disable react/no-unescaped-entities */
+import React from "react";
 import { useOutletContext } from "react-router-dom";
 
 const IdCard = () => {
     const { data } = useOutletContext();
+
+    // Function to trigger the print dialog
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div>
             <body className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -12,13 +18,11 @@ const IdCard = () => {
                         <p className="font-semibold text-center">Student ID Card</p>
                     </div>
 
-
                     <img
                         src={`http://192.168.1.9:8000/admin/students/${data.studentImage}`}
                         alt="Student Photo"
                         className="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 object-cover mb-4"
                     />
-
 
                     <div>
                         <h4 className="text-lg font-semibold text-center">{data.studentNameEn}</h4>
@@ -60,10 +64,19 @@ const IdCard = () => {
                         </tbody>
                     </table>
 
-
                     <div className="text-xs text-gray-600 text-center">
                         <p>Issued on: 01 December 2024</p>
                         <p>Valid Until: 31 December 2025</p>
+                    </div>
+
+                    {/* Print Button */}
+                    <div className="text-center mt-4">
+                        <button 
+                            onClick={handlePrint}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                        >
+                            Print ID Card
+                        </button>
                     </div>
                 </div>
             </body>

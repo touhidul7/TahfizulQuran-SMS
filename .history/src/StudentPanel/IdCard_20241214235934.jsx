@@ -1,24 +1,69 @@
-/* eslint-disable react/no-unescaped-entities */
+import React from "react";
 import { useOutletContext } from "react-router-dom";
 
 const IdCard = () => {
     const { data } = useOutletContext();
+
+    // Function to trigger the print dialog
+    const handlePrint = () => {
+        window.print();
+    };
+
     return (
         <div>
-            <body className="flex items-center justify-center min-h-screen bg-gray-100">
-                <div className="w-80 border-2 border-blue-500 rounded-lg p-4 bg-white shadow-md text-left">
+            <style>
+                {`
+                    @media print {
+                        /* Hide everything */
+                        body * {
+                            visibility: hidden;
+                        }
+                        
+                        /* Show only the print container */
+                        .print-container, .print-container * {
+                            visibility: visible;
+                        }
+
+                        .print-container {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        /* Adjust the ID card width for printing */
+                        .id-card {
+                            width: 100%;
+                            max-width: 500px; /* Adjust max width if necessary */
+                            padding: 20px;
+                        }
+
+                        /* Optional: If you want to ensure it's centered */
+                        .id-card img {
+                            margin: 0 auto;
+                            display: block;
+                        }
+                    }
+                `}
+            </style>
+
+            {/* Main Content */}
+            <div className="flex items-center justify-center min-h-screen bg-gray-100">
+                <div className="id-card print-container border-2 border-blue-500 rounded-lg p-4 bg-white shadow-md text-left">
 
                     <div className="bg-blue-500 text-white py-2 rounded-t-lg mb-4">
                         <p className="font-semibold text-center">Student ID Card</p>
                     </div>
-
 
                     <img
                         src={`http://192.168.1.9:8000/admin/students/${data.studentImage}`}
                         alt="Student Photo"
                         className="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 object-cover mb-4"
                     />
-
 
                     <div>
                         <h4 className="text-lg font-semibold text-center">{data.studentNameEn}</h4>
@@ -60,13 +105,22 @@ const IdCard = () => {
                         </tbody>
                     </table>
 
-
                     <div className="text-xs text-gray-600 text-center">
                         <p>Issued on: 01 December 2024</p>
                         <p>Valid Until: 31 December 2025</p>
                     </div>
+
+                    {/* Print Button */}
+                    <div className="text-center mt-4">
+                        <button 
+                            onClick={handlePrint}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                        >
+                            Print ID Card
+                        </button>
+                    </div>
                 </div>
-            </body>
+            </div>
         </div>
     );
 };

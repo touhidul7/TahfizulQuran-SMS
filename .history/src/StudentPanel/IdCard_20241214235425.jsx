@@ -6,10 +6,10 @@ const IdCard = () => {
     return (
         <div>
             <body className="flex items-center justify-center min-h-screen bg-gray-100">
-                <div className="w-80 border-2 border-blue-500 rounded-lg p-4 bg-white shadow-md text-left">
+                <div className="w-80 border-2 border-blue-500 rounded-lg p-4 bg-white shadow-md text-center">
 
                     <div className="bg-blue-500 text-white py-2 rounded-t-lg mb-4">
-                        <p className="font-semibold text-center">Student ID Card</p>
+                        <p className="font-semibold">Student ID Card</p>
                     </div>
 
 
@@ -21,7 +21,7 @@ const IdCard = () => {
 
 
                     <div>
-                        <h4 className="text-lg font-semibold text-center">{data.studentNameEn}</h4>
+                        <h4 className="text-lg font-semibold">{data.studentNameEn}</h4>
                     </div>
                     <table className="w-full text-sm mt-3 mb-2">
                         <tbody>
@@ -61,7 +61,7 @@ const IdCard = () => {
                     </table>
 
 
-                    <div className="text-xs text-gray-600 text-center">
+                    <div className="text-xs text-gray-600">
                         <p>Issued on: 01 December 2024</p>
                         <p>Valid Until: 31 December 2025</p>
                     </div>
