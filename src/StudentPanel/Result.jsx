@@ -1,34 +1,131 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/no-unescaped-entities */
 
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useOutletContext } from "react-router-dom";
 
 const Result = () => {
-    const {data} = useOutletContext();
-    console.log(data);
-    
+  const [resutls, setResults] = useState();
+  const [formData, setFormData] = useState();
+  const [terms, setTerms] = useState();
+  const { data } = useOutletContext();
+  console.log(data);
+  const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  /* Get Term */
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const response = await fetch(`${backendApiUrl}/getExamName`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json(); // Assuming the API returns JSON
+        setTerms(data); // Update state with the fetched data
+      } catch (error) {
+        // setError(error.message); 
+        console.log(error.message);
+      } 
+    };
+
+    fetchClasses();
+  });
+
+
+
+  /* Check Result Section-------------- */
+  function handlesearchresult(e) {
+    e.preventDefault();
+    axios
+      .get(`${backendApiUrl}/getExamResult/${data.studentId}/${data.classname}`)
+      .then(function (response) {
+        setResults(response.data.data);
+        toast.success("Successfully Loaded Data!");
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+        toast.error("Result Not Found");
+      });
+  }
+
+  console.log(resutls);
+
+  /* check result end */
+
   return (
     <div className="container mx-auto my-10">
+      <div className="px-10 py-10">
+        <form onSubmit={handlesearchresult}>
+          <FormSection title="Select Exam Term">
+            <div>
+              <label htmlFor="classname" className="block mb-1">
+                Select Class
+              </label>
+              <select
+                name="Term"
+                id="term"
+                className="w-full border rounded px-2 py-1"
+                onChange={handleInputChange}
+              >
+                {terms.map((term, index) => (
+                    <option key={index} value={term.examination}>{term.examination} </option>
+                ))}
+                
+              </select>
+            </div>
+          </FormSection>
+          <button type="submit" className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full">Search Result</button>
+        </form>
+      </div>
+
       {/* Result Header */}
       <div className="bg-gray-100 p-5 rounded-lg mb-8 text-center">
-        <h1 className="text-xl font-bold">Your PSC Results</h1>
+        <h1 className="text-xl font-bold">Your Exam Results</h1>
       </div>
 
       {/* Student Information */}
       <div className="mb-8">
         <div className="flex  justify-around gap-8 w-full px-16">
           <div className="w-full md:w-1/2">
-            <p><strong>Name:</strong></p>
-            <p><strong>Roll No: {data.studentId}</strong></p>
-            <p><strong>Board:</strong></p>
-            <p><strong>Group:</strong></p>
-            <p><strong>Type:</strong></p>
+            <p>
+              <strong>Father's Name:</strong>
+            </p>
+            <p>
+              <strong>Mother's Name:{data.motherNameEn}</strong>
+            </p>
+            <p>
+              <strong>Date of Birth: {data.fatherNameEn}</strong>
+            </p>
+            <p>
+              <strong>Institute: Medha Bikash </strong>
+            </p>
           </div>
           <div className="w-full md:w-1/2">
-            <p><strong>Father's Name:</strong></p>
-            <p><strong>Mother's Name:</strong></p>
-            <p><strong>Date of Birth:</strong></p>
-            <p><strong>Result:</strong></p>
-            <p><strong>Institute:</strong></p>
+            <p>
+              <strong>Student's Name: {data.studentNameEn}</strong>
+            </p>
+            <p>
+              <strong>Roll No: {data.studentId}</strong>
+            </p>
+            <p>
+              <strong>
+                Student Stutus: {data.status == 0 ? "Pending" : "Active"}
+              </strong>
+            </p>
+            <p>
+              <strong>Result:</strong>
+            </p>
           </div>
         </div>
       </div>
@@ -67,7 +164,9 @@ const Result = () => {
             </tr>
             <tr className="text-center">
               <td className="border px-4 py-2">4</td>
-              <td className="border px-4 py-2">BANGLADESH AND GLOBAL STUDIES</td>
+              <td className="border px-4 py-2">
+                BANGLADESH AND GLOBAL STUDIES
+              </td>
               <td className="border px-4 py-2">A-</td>
             </tr>
             <tr className="text-center">
@@ -86,7 +185,10 @@ const Result = () => {
 
       {/* Search Again Button */}
       <div className="text-center mt-8">
-        <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg">
+        <a
+          href="#"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg"
+        >
           Search Again
         </a>
       </div>
@@ -95,3 +197,9 @@ const Result = () => {
 };
 
 export default Result;
+const FormSection = ({ title, children }) => (
+    <fieldset className="border border-green-600 p-4 mb-4 flex flex-col justify-end">
+      <legend className="px-2 text-lg text-green-700">{title}</legend>
+      <div className="grid grid-cols-1 gap-4">{children}</div>
+    </fieldset>
+  );
