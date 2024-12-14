@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
@@ -272,7 +271,7 @@ const PayFee = () => {
           Search Student Details
         </h2>
         <div>
-          <form className="p-6">
+          <form className="lg:p-6">
             <FormSection title="Student Information">
               <InputField
                 label="Student ID"

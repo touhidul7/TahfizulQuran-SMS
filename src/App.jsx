@@ -55,7 +55,7 @@ const App = () => {
     };
 
     fetchClasses();
-  }, []);
+  },);
 
   console.log("dd", classes);
 
@@ -219,7 +219,7 @@ const App = () => {
       });
 
       const response = await axios.post(
-        `${backendApiUrl}students/admission`,
+        `${backendApiUrl}/students/admission`,
         formDataToSend,
         {
           headers: {
