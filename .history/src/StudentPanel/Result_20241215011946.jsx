@@ -112,43 +112,40 @@ const Result = () => {
       </div>
 
       {/* Student Information */}
-      {/* Student Information */}
-      <div className="mb-12">
-        <div className="flex flex-col md:flex-row justify-between gap-8 px-8 md:px-16">
-          {/* Left Column */}
-          <div className="w-full md:w-1/2 space-y-4">
-            <p className="text-lg font-medium">
-              <strong>Father's Name:</strong> {data.fatherNameEn}
+      <div className="mb-8">
+        <div className="flex  justify-around gap-8 w-full px-16">
+          <div className="w-full md:w-1/2">
+            <p>
+              <strong>Father's Name:</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Mother's Name:</strong> {data.motherNameEn}
+            <p>
+              <strong>Mother's Name:{data.motherNameEn}</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Date of Birth:</strong> {data.dob} {/* Update with correct data field */}
+            <p>
+              <strong>Date of Birth: {data.fatherNameEn}</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Institute:</strong> Medha Bikash
+            <p>
+              <strong>Institute: Medha Bikash </strong>
             </p>
           </div>
-
-          {/* Right Column */}
-          <div className="w-full md:w-1/2 space-y-4">
-            <p className="text-lg font-medium">
-              <strong>Student's Name:</strong> {data.studentNameEn}
+          <div className="w-full md:w-1/2">
+            <p>
+              <strong>Student's Name: {data.studentNameEn}</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Roll No:</strong> {data.studentId}
+            <p>
+              <strong>Roll No: {data.studentId}</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Student Status:</strong> {data.status === 0 ? "Pending" : "Active"}
+            <p>
+              <strong>
+                Student Stutus: {data.status == 0 ? "Pending" : "Active"}
+              </strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Result:</strong> {/* Add dynamic result status here */}
+            <p>
+              <strong>Result:</strong>
             </p>
           </div>
         </div>
       </div>
-
 
       {/* GPA Information */}
       <div className="alert alert-info text-center bg-blue-100 text-blue-800 p-4 rounded-md">

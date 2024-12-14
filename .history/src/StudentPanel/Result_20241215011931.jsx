@@ -12,7 +12,7 @@ const Result = () => {
 
   const { data } = useOutletContext();
   const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
-
+  
   const calculateGrade = (marks) => {
     if (marks >= 80) return 'A';
     if (marks >= 60) return 'B';
@@ -20,7 +20,7 @@ const Result = () => {
     if (marks >= 20) return 'D';
     return 'F';
   };
-
+  
 
   const [terms, setTerms] = useState([]);
   /* Get Term */
@@ -65,9 +65,9 @@ const Result = () => {
         toast.error("Result Not Found");
       });
   }
-
+  
   console.log(results);
-
+  
 
   /* check result end */
 
@@ -112,43 +112,40 @@ const Result = () => {
       </div>
 
       {/* Student Information */}
-      {/* Student Information */}
-      <div className="mb-12">
-        <div className="flex flex-col md:flex-row justify-between gap-8 px-8 md:px-16">
-          {/* Left Column */}
-          <div className="w-full md:w-1/2 space-y-4">
-            <p className="text-lg font-medium">
-              <strong>Father's Name:</strong> {data.fatherNameEn}
+      <div className="mb-8">
+        <div className="flex  justify-around gap-8 w-full px-16">
+          <div className="w-full md:w-1/2">
+            <p>
+              <strong>Father's Name:</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Mother's Name:</strong> {data.motherNameEn}
+            <p>
+              <strong>Mother's Name:{data.motherNameEn}</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Date of Birth:</strong> {data.dob} {/* Update with correct data field */}
+            <p>
+              <strong>Date of Birth: {data.fatherNameEn}</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Institute:</strong> Medha Bikash
+            <p>
+              <strong>Institute: Medha Bikash </strong>
             </p>
           </div>
-
-          {/* Right Column */}
-          <div className="w-full md:w-1/2 space-y-4">
-            <p className="text-lg font-medium">
-              <strong>Student's Name:</strong> {data.studentNameEn}
+          <div className="w-full md:w-1/2">
+            <p>
+              <strong>Student's Name: {data.studentNameEn}</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Roll No:</strong> {data.studentId}
+            <p>
+              <strong>Roll No: {data.studentId}</strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Student Status:</strong> {data.status === 0 ? "Pending" : "Active"}
+            <p>
+              <strong>
+                Student Stutus: {data.status == 0 ? "Pending" : "Active"}
+              </strong>
             </p>
-            <p className="text-lg font-medium">
-              <strong>Result:</strong> {/* Add dynamic result status here */}
+            <p>
+              <strong>Result:</strong>
             </p>
           </div>
         </div>
       </div>
-
 
       {/* GPA Information */}
       <div className="alert alert-info text-center bg-blue-100 text-blue-800 p-4 rounded-md">
@@ -156,39 +153,33 @@ const Result = () => {
       </div>
 
       {/* Grade Sheet Table */}
-      <h3 className="text-center text-xl font-semibold mb-6">Grade Sheet</h3>
-      <div className="overflow-x-auto">
-        <table className="table-auto w-full border-collapse border border-gray-300 shadow-md">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="py-3 px-6 text-left">Serial No</th>
-              <th className="py-3 px-6 text-left">Subject</th>
-              <th className="py-3 px-6 text-left">Marks</th>
-              <th className="py-3 px-6 text-left">Grade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {results?.length > 0 ? (
-              Object.entries(results[0].subjects_marks).map(([subject, marks], index) => {
-                const grade = calculateGrade(Number(marks)); // Calculate grade
-                return (
-                  <tr className="text-center border-t border-gray-200" key={index}>
-                    <td className="border px-6 py-4">{index + 1}</td>
-                    <td className="border px-6 py-4">{subject}</td>
-                    <td className="border px-6 py-4">{marks}</td>
-                    <td className="border px-6 py-4">{grade}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="4" className="text-center border px-6 py-4">No results found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
+<h3 className="text-center text-xl font-semibold mb-6">Grade Sheet</h3>
+<div className="overflow-x-auto">
+  <table className="table-auto w-full border border-gray-300">
+    <thead className="bg-gray-800 text-white">
+      <tr>
+        <th className="py-2 px-4">Serial No</th>
+        <th className="py-2 px-4">Subject</th>
+        <th className="py-2 px-4">Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      {results?.length > 0 ? (
+        Object.entries(results[0].subjects_marks).map(([subject, marks], index) => (
+          <tr className="text-center" key={index}>
+            <td className="border px-4 py-2">{index + 1}</td>
+            <td className="border px-4 py-2">{subject}</td>
+            <td className="border px-4 py-2">{marks}</td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="3" className="text-center border px-4 py-2">No results found</td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
 
 
       {/* Search Again Button */}
