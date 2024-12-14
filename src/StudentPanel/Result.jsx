@@ -18,7 +18,7 @@ const Result = () => {
         <div className="flex  justify-around gap-8 w-full px-16">
           <div className="w-full md:w-1/2">
             <p><strong>Name:</strong></p>
-            <p><strong>Roll No:{data.studentId}</strong></p>
+            <p><strong>Roll No: {data.studentId}</strong></p>
             <p><strong>Board:</strong></p>
             <p><strong>Group:</strong></p>
             <p><strong>Type:</strong></p>
