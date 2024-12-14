@@ -52,33 +52,21 @@ const Result = () => {
   function handlesearchresult(e) {
     e.preventDefault();
     axios
-      .get(`${backendApiUrl}/getExamResult/${data.studentId}`)
+      .get(`${backendApiUrl}/getExamResult/${data.studentId}/${data.classname}`)
       .then(function (response) {
-        console.log('API Response:', response.data); // Log the full response
-  
-        const results = response.data.data; // Array of results
-  
-        // Filter results based on the selected examination term and class
-        const filteredResults = results.filter(
-          (result) => result.class === data.classname && result.examination === formData.terms
+        console.log(response);
+        
+        const filteredResults = response.data.data.filter(
+          (result) => result.examination === formData.terms
         );
-  
-        if (filteredResults.length > 0) {
-          setResults(filteredResults);  // Set the filtered results
-          toast.success("Successfully Loaded Data!");
-        } else {
-          setResults([]);  // Clear results if no match
-          toast.error("No results found for the selected term and class.");
-        }
+        setResults(filteredResults);  // Set filtered results
+        toast.success("Successfully Loaded Data!");
       })
       .catch(function (error) {
         console.log(error);
         toast.error("Result Not Found");
       });
   }
-  
-  
-  
 
   console.log(results);
 
@@ -169,39 +157,32 @@ const Result = () => {
         <strong>GPA:</strong>
       </div>
 
-      {/* Grade Sheet Table */}
-      <h3 className="text-center text-xl font-semibold mb-6">Grade Sheet</h3>
-      <div className="overflow-x-auto">
-        <table className="table-auto w-full border-collapse border border-gray-300 shadow-md">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="py-3 px-6 text-left">Serial No</th>
-              <th className="py-3 px-6 text-left">Subject</th>
-              <th className="py-3 px-6 text-left">Marks</th>
-              <th className="py-3 px-6 text-left">Grade</th>
-            </tr>
-          </thead>
-          <tbody>
-            {results?.length > 0 ? (
-              Object.entries(results[0].subjects_marks).map(([subject, marks], index) => {
-                const grade = calculateGrade(Number(marks)); // Calculate grade
-                return (
-                  <tr className="text-center border-t border-gray-200" key={index}>
-                    <td className="border px-6 py-4">{index + 1}</td>
-                    <td className="border px-6 py-4">{subject}</td>
-                    <td className="border px-6 py-4">{marks}</td>
-                    <td className="border px-6 py-4">{grade}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="4" className="text-center border px-6 py-4">No results found</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+     {/* Grade Sheet Table */}
+<h3 className="text-center text-xl font-semibold mb-6">Grade Sheet</h3>
+<div className="overflow-x-auto">
+  <table className="table-auto w-full border border-gray-300">
+    <thead className="bg-gray-800 text-white">
+      <tr>
+        <th className="py-2 px-4">Examination</th>
+        <th className="py-2 px-4">Subject</th>
+        <th className="py-2 px-4">Grade</th>
+      </tr>
+    </thead>
+    <tbody>
+      {results?.map((result, index) => (
+        <tr key={index} className="text-center">
+          <td className="border px-4 py-2">{result.examination}</td>
+          {Object.entries(result.subjects_marks).map(([subject, mark], index) => (
+            <React.Fragment key={index}>
+              <td className="border px-4 py-2">{subject}</td>
+              <td className="border px-4 py-2">{mark}</td>
+            </React.Fragment>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
 
 

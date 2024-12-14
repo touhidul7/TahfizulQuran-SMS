@@ -56,15 +56,11 @@ const Result = () => {
       .then(function (response) {
         console.log('API Response:', response.data); // Log the full response
   
-        const results = response.data.data; // Array of results
+        const result = response.data.data; // Directly access the result object
   
-        // Filter results based on the selected examination term and class
-        const filteredResults = results.filter(
-          (result) => result.class === data.classname && result.examination === formData.terms
-        );
-  
-        if (filteredResults.length > 0) {
-          setResults(filteredResults);  // Set the filtered results
+        // Check if the result's class and examination match the selected ones
+        if (result.class === data.classname && result.examination === formData.terms) {
+          setResults([result]);  // Set the result as an array
           toast.success("Successfully Loaded Data!");
         } else {
           setResults([]);  // Clear results if no match
@@ -76,7 +72,6 @@ const Result = () => {
         toast.error("Result Not Found");
       });
   }
-  
   
   
 

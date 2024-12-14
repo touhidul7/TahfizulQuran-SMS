@@ -7,8 +7,10 @@ import toast from "react-hot-toast";
 import { useOutletContext } from "react-router-dom";
 
 const Result = () => {
-  const [results, setResults] = useState();
-  const [formData, setFormData] = useState();
+  const [results, setResults] = useState([]); // Initialize as empty array
+  const [formData, setFormData] = useState({
+    terms: "", // to hold the selected term
+  });
 
   const { data } = useOutletContext();
   const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -21,24 +23,22 @@ const Result = () => {
     return 'F';
   };
 
-
   const [terms, setTerms] = useState([]);
-  /* Get Term */
+
+  // Get Exam Terms
   useEffect(() => {
     axios
       .get(`${backendApiUrl}/getExamName`)
       .then(function (response) {
-        setTerms(response.data.data);
-        //toast.success("Successfully Loaded Data!");
+        setTerms(response.data.data); // Set terms from API response
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
         toast.error("Result Not Found");
       });
   }, [backendApiUrl]);
 
-  // get input data
+  // Handle input change for selecting exam term
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -47,43 +47,30 @@ const Result = () => {
     }));
   };
 
-
-  /* Check Result Section-------------- */
-  function handlesearchresult(e) {
+  // Handle searching result
+  const handlesearchresult = (e) => {
     e.preventDefault();
+
+    if (!formData.terms) {
+      toast.error("Please select an exam term.");
+      return;
+    }
+
     axios
-      .get(`${backendApiUrl}/getExamResult/${data.studentId}`)
+      .get(`${backendApiUrl}/getExamResult/${data.studentId}/${data.classname}`)
       .then(function (response) {
-        console.log('API Response:', response.data); // Log the full response
-  
-        const results = response.data.data; // Array of results
-  
-        // Filter results based on the selected examination term and class
-        const filteredResults = results.filter(
-          (result) => result.class === data.classname && result.examination === formData.terms
+        // Filter results based on selected examination term
+        const filteredResults = response.data.data.filter(
+          (result) => result.examination === formData.terms
         );
-  
-        if (filteredResults.length > 0) {
-          setResults(filteredResults);  // Set the filtered results
-          toast.success("Successfully Loaded Data!");
-        } else {
-          setResults([]);  // Clear results if no match
-          toast.error("No results found for the selected term and class.");
-        }
+        setResults(filteredResults); // Set filtered results
+        toast.success("Successfully Loaded Data!");
       })
       .catch(function (error) {
         console.log(error);
         toast.error("Result Not Found");
       });
-  }
-  
-  
-  
-
-  console.log(results);
-
-
-  /* check result end */
+  };
 
   return (
     <div className="container mx-auto my-10">
@@ -91,7 +78,7 @@ const Result = () => {
         <form onSubmit={handlesearchresult}>
           <FormSection title="Select Exam Term">
             <div>
-              <label htmlFor="classname" className="block mb-1">
+              <label htmlFor="terms" className="block mb-1">
                 Select Exam Terms
               </label>
               <select
@@ -99,24 +86,23 @@ const Result = () => {
                 id="terms"
                 className="w-full border rounded px-2 py-1"
                 onChange={handleInputChange}
+                value={formData.terms} // Bind value for controlled input
               >
-                <option value="">Select Exams Terms</option>
-                {
-                  terms?.map(item => {
-                    return (
-                      <option key={item.id} value={item.name}>{item.name} </option>
-                    )
-                  })
-                }
-
-                {/* {terms.map((term, index) => (
-                  <option key={index} value={term.examination}>{term.examination} </option>
-                ))} */}
-
+                <option value="">Select Exam Terms</option>
+                {terms?.map((item) => (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
           </FormSection>
-          <button type="submit" className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full">Search Result</button>
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 w-full"
+          >
+            Search Result
+          </button>
         </form>
       </div>
 
@@ -126,10 +112,8 @@ const Result = () => {
       </div>
 
       {/* Student Information */}
-      {/* Student Information */}
       <div className="mb-12">
         <div className="flex flex-col md:flex-row justify-between gap-8 px-8 md:px-16">
-          {/* Left Column */}
           <div className="w-full md:w-1/2 space-y-4">
             <p className="text-lg font-medium">
               <strong>Father's Name:</strong> {data.fatherNameEn}
@@ -138,14 +122,12 @@ const Result = () => {
               <strong>Mother's Name:</strong> {data.motherNameEn}
             </p>
             <p className="text-lg font-medium">
-              <strong>Date of Birth:</strong> {data.dob} {/* Update with correct data field */}
+              <strong>Date of Birth:</strong> {data.dob}
             </p>
             <p className="text-lg font-medium">
               <strong>Institute:</strong> Medha Bikash
             </p>
           </div>
-
-          {/* Right Column */}
           <div className="w-full md:w-1/2 space-y-4">
             <p className="text-lg font-medium">
               <strong>Student's Name:</strong> {data.studentNameEn}
@@ -157,12 +139,11 @@ const Result = () => {
               <strong>Student Status:</strong> {data.status === 0 ? "Pending" : "Active"}
             </p>
             <p className="text-lg font-medium">
-              <strong>Result:</strong> {/* Add dynamic result status here */}
+              <strong>Result:</strong>
             </p>
           </div>
         </div>
       </div>
-
 
       {/* GPA Information */}
       <div className="alert alert-info text-center bg-blue-100 text-blue-800 p-4 rounded-md">
@@ -172,45 +153,33 @@ const Result = () => {
       {/* Grade Sheet Table */}
       <h3 className="text-center text-xl font-semibold mb-6">Grade Sheet</h3>
       <div className="overflow-x-auto">
-        <table className="table-auto w-full border-collapse border border-gray-300 shadow-md">
-          <thead className="bg-blue-600 text-white">
+        <table className="table-auto w-full border border-gray-300">
+          <thead className="bg-gray-800 text-white">
             <tr>
-              <th className="py-3 px-6 text-left">Serial No</th>
-              <th className="py-3 px-6 text-left">Subject</th>
-              <th className="py-3 px-6 text-left">Marks</th>
-              <th className="py-3 px-6 text-left">Grade</th>
+              <th className="py-2 px-4">Examination</th>
+              <th className="py-2 px-4">Subject</th>
+              <th className="py-2 px-4">Grade</th>
             </tr>
           </thead>
           <tbody>
-            {results?.length > 0 ? (
-              Object.entries(results[0].subjects_marks).map(([subject, marks], index) => {
-                const grade = calculateGrade(Number(marks)); // Calculate grade
-                return (
-                  <tr className="text-center border-t border-gray-200" key={index}>
-                    <td className="border px-6 py-4">{index + 1}</td>
-                    <td className="border px-6 py-4">{subject}</td>
-                    <td className="border px-6 py-4">{marks}</td>
-                    <td className="border px-6 py-4">{grade}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="4" className="text-center border px-6 py-4">No results found</td>
+            {results?.map((result, index) => (
+              <tr key={index} className="text-center">
+                <td className="border px-4 py-2">{result.examination}</td>
+                {Object.entries(result.subjects_marks).map(([subject, mark], index) => (
+                  <React.Fragment key={index}>
+                    <td className="border px-4 py-2">{subject}</td>
+                    <td className="border px-4 py-2">{calculateGrade(mark)}</td>
+                  </React.Fragment>
+                ))}
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
       </div>
 
-
-
       {/* Search Again Button */}
       <div className="text-center mt-8">
-        <a
-          href="#"
-          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg"
-        >
+        <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg">
           Search Again
         </a>
       </div>
@@ -219,6 +188,7 @@ const Result = () => {
 };
 
 export default Result;
+
 const FormSection = ({ title, children }) => (
   <fieldset className="border border-green-600 p-4 mb-4 flex flex-col justify-end">
     <legend className="px-2 text-lg text-green-700">{title}</legend>

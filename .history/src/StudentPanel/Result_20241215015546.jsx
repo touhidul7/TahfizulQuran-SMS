@@ -52,33 +52,19 @@ const Result = () => {
   function handlesearchresult(e) {
     e.preventDefault();
     axios
-      .get(`${backendApiUrl}/getExamResult/${data.studentId}`)
+      .get(`${backendApiUrl}/getExamResult/${data.studentId}/${data.classname}/${formData.terms}`)
       .then(function (response) {
-        console.log('API Response:', response.data); // Log the full response
-  
-        const results = response.data.data; // Array of results
-  
-        // Filter results based on the selected examination term and class
-        const filteredResults = results.filter(
+        const filteredResults = response.data.data.filter(
           (result) => result.class === data.classname && result.examination === formData.terms
         );
-  
-        if (filteredResults.length > 0) {
-          setResults(filteredResults);  // Set the filtered results
-          toast.success("Successfully Loaded Data!");
-        } else {
-          setResults([]);  // Clear results if no match
-          toast.error("No results found for the selected term and class.");
-        }
+        setResults(filteredResults);  // Set filtered results
+        toast.success("Successfully Loaded Data!");
       })
       .catch(function (error) {
         console.log(error);
         toast.error("Result Not Found");
       });
   }
-  
-  
-  
 
   console.log(results);
 
