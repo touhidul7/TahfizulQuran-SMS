@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+    background-color: white;
+}
 
 .active{
     color: #3B82F6;

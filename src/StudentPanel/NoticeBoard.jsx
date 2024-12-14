@@ -18,12 +18,12 @@ const NoticeBoard = () => {
       // handle error
       console.log(error);
     })
-  },[])
+  },)
 
  
   return (
     <div className="py-16">
-      <ul className="w-full divide-y px-40 divide-gray-200">
+      <ul className="w-full divide-y lg:px-40 px-6 divide-gray-200">
         {noticeboard.map((notice, index) => (
           <li key={index} className="pb-3 sm:pb-4 w-full pt-3">
             <div className="flex items-center space-x-4 rtl:space-x-reverse w-full">

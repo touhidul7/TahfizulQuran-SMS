@@ -4,11 +4,13 @@ import { Toaster } from "react-hot-toast";
 
 // eslint-disable-next-line react/prop-types
 const Dashboard = ({data}) => {
+    console.log(data);
+    
     return (
         <div>
              <Toaster position="top-center" reverseOrder={false} />
-            <div className="mb-10"><Navbar data={data}/></div>
-            <Outlet/>
+            <div className="mb-20"><Navbar data={data}/></div>
+            <Outlet context={{data}}/>
         </div>
     );
 };

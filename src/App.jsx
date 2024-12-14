@@ -55,7 +55,7 @@ const App = () => {
     };
 
     fetchClasses();
-  }, []);
+  });
 
   console.log("dd", classes);
 
@@ -219,7 +219,7 @@ const App = () => {
       });
 
       const response = await axios.post(
-        `${backendApiUrl}students/admission`,
+        `${backendApiUrl}/students/admission`,
         formDataToSend,
         {
           headers: {
@@ -279,15 +279,15 @@ const App = () => {
     { label: "Cash", value: "cash" },
   ];
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center py-8">
+    <div className="bg-gray-100 min-h-screen flex items-center justify-center lg:py-8 pb-8">
       <Toaster position="top-center" reverseOrder={false} />
-      <div className="bg-white w-full max-w-5xl rounded-lg shadow-lg p-0">
-        <img className="rounded-t-lg" src="./img/Form-Heading.jpg" alt="" />
+      <div className="bg-white w-full max-w-5xl lg:rounded-lg shadow-lg p-0">
+        <img className="lg:rounded-t-lg" src="./img/Form-Heading.jpg" alt="" />
         <form className="p-6" onSubmit={handleSubmit}>
           {/* Student Information */}
           <FormSection title="Student Information">
             <InputField
-              label="Student Image (jpg / png support)"
+              label="Student Image (jpg/png)"
               type="file"
               name="studentImage"
               onChange={handleFileChange}
@@ -302,12 +302,10 @@ const App = () => {
               name="studentNameBn"
               onChange={handleInputChange}
             />
-
-            <InputField
-              label="Email (Optional)"
-              requried={false}
-              type="email"
-              name="email"
+             <InputField
+              label="Birth Certificate No."
+              type="number"
+              name="birthCertificate"
               onChange={handleInputChange}
             />
             <InputField
@@ -316,6 +314,14 @@ const App = () => {
               name="dob"
               onChange={handleInputChange}
             />
+            <InputField
+              label="Email (Optional)"
+              requried={false}
+              type="email"
+              name="email"
+              onChange={handleInputChange}
+            />
+
             <SelectField
               label="Gender"
               name="gender"
@@ -324,18 +330,13 @@ const App = () => {
               onChange={handleInputChange}
             />
             <SelectField
-              label="Blood Group"
+              label={"Blood Group"}
               name="bloodGroup"
               options={bloodGroupOptions}
               value={formData.bloodGroup}
               onChange={handleInputChange}
             />
-            <InputField
-              label="Birth Certificate No."
-              type="number"
-              name="birthCertificate"
-              onChange={handleInputChange}
-            />
+           
             {/*  <InputField
               label="Birth Certificate (jpg / png support)"
               type="file"
@@ -392,7 +393,7 @@ const App = () => {
           {/* Present Address */}
           <FormSection title="Present Address">
             <InputField
-              label="Village/House, Road"
+              label="Village/Road"
               name="villagePreset"
               onChange={handleInputChange}
             />
@@ -415,7 +416,7 @@ const App = () => {
 
           <FormSection title="Permanent Address">
             <InputField
-              label="Village/House, Road"
+              label="Village/Road"
               name="villagePermanent"
               onChange={handleInputChange}
             />
@@ -438,22 +439,24 @@ const App = () => {
 
           {/* Student Admission Information */}
           <FormSection title="Student Admission Information">
-           <div>
-           <label htmlFor="classname" className="block mb-1">Select Class</label>
-           <select
-              name="classname"
-              id="classname"
-              className="w-full border rounded px-2 py-1"
-              onChange={handleInputChange}
-            >
-              <option value="">Choose </option>
-              {classes.map((item, index) => (
-                <option key={index} value={item.class}>
-                  {item.class}
-                </option>
-              ))}
-            </select>
-           </div>
+            <div>
+              <label htmlFor="classname" className="block mb-1">
+                Select Class
+              </label>
+              <select
+                name="classname"
+                id="classname"
+                className="w-full border rounded px-2 py-1"
+                onChange={handleInputChange}
+              >
+                <option value="">Choose </option>
+                {classes.map((item, index) => (
+                  <option key={index} value={item.class}>
+                    {item.class}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             {/* <SelectField
               label="Select Class"
@@ -487,7 +490,7 @@ const App = () => {
           {/* Payment Information */}
           <FormSection title="Payment Information">
             <SelectField
-              label="Select Payment"
+              label="Select Payment Method"
               name="paymentmethod"
               options={PaymentOptions}
               value={formData.paymentmethod}
