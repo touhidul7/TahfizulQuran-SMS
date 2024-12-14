@@ -493,7 +493,7 @@ const App = () => {
               value={formData.paymentmethod}
               onChange={handleInputChange}
             />
-             {formData.paymentmethod !== "cash" && (
+             {formData.paymentmethod !== "cash"  && (
             <>
             <InputField
               label="Payment Phone Number"
