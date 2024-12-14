@@ -8,6 +8,8 @@ import Dashboard from "./StudentPanel/Dashboard";
 import Login from "./StudentPanel/Login";
 import Auth from "./Auth/Auth";
 import NoticeBoard from "./StudentPanel/NoticeBoard";
+import Result from "./StudentPanel/Result";
+import IdCard from "./StudentPanel/IdCard";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "/noticeboard",
         element: <NoticeBoard />,
+      },
+      {
+        path: "/result",
+        element: <Result />,
+      },
+      {
+        path: "/idcard",
+        element: <IdCard />,
       },
     ],
   },
