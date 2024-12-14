@@ -31,7 +31,7 @@ const App = () => {
       studentid: randomNumber,
     }));
 
-    //console.log(`Generated Random Number: ${randomNumber}`);
+    console.log(`Generated Random Number: ${randomNumber}`);
   };
  
   /* Fetch class data */
