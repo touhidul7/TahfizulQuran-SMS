@@ -470,7 +470,7 @@ const App = () => {
             /> */}
 
             <InputField
-              label="Amount"
+              label="Admission Fee"
               type="number"
               name="amount"
               onChange={handleInputChange}
@@ -493,6 +493,8 @@ const App = () => {
               value={formData.paymentmethod}
               onChange={handleInputChange}
             />
+             {formData.paymentmethod !== "cash" && (
+            <>
             <InputField
               label="Payment Phone Number"
               name="pyamentnumber"
@@ -503,6 +505,8 @@ const App = () => {
               name="trxid"
               onChange={handleInputChange}
             />
+            </>
+            )}
             <InputField
               label="Admission Date"
               name="admissiondate"

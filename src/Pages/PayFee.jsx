@@ -339,23 +339,25 @@ const PayFee = () => {
                     options={PaymentOptions}
                     onChange={handleInputChange}
                   />
-              
+                    {formData.pType !== "cash" && (
+                    <>
                     <InputField
                       label="Payment Phone Number"
                       name="pRef"
                       onChange={handleInputChange}
                     />
-                    <InputField
-                      label="Fee Amount"
-                      name="amount"
-                      onChange={handleInputChange}
-                    />
+                    
                     <InputField
                       label="Transaction ID"
                       name="pDetails"
                       onChange={handleInputChange}
                     />
-                
+                    </>)}
+                    <InputField
+                      label="Fee Amount"
+                      name="amount"
+                      onChange={handleInputChange}
+                    />
                 </FormSection>
                 {submitData ? (
                   "Thank You For Your Payment"
