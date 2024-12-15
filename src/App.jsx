@@ -366,17 +366,20 @@ const App = () => {
             />
             <InputField
               label="Father Mobile Number"
+              type="tel"
               name="fatherMobile"
               onChange={handleInputChange}
             />
             <InputField
               label="Mother Mobile Number"
+              type="tel"
               name="motherMobile"
               onChange={handleInputChange}
             />
             <InputField
               label="National ID Number"
               name="nid"
+              type="number"
               onChange={handleInputChange}
             />
             {/* <InputField
