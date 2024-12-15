@@ -113,7 +113,7 @@ const IdCard = () => {
         </div>
       </div>
       {/* ID Card Download Button */}
-      <button onClick={handleDownloadPDF}>
+      <button onClick={handleDownloadPDF} className="hidden">
         <div className="mt-6 bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
           Download PDF
         </div>
