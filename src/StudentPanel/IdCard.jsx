@@ -13,6 +13,7 @@ const IdCard = () => {
         html2canvas(idCardElement, {
             scale: 2, // Ensures high resolution
             useCORS: true, // Allows cross-origin images
+            allowTaint: true,
         }).then((canvas) => {
             const imgData = canvas.toDataURL("image/png");
 
@@ -90,6 +91,7 @@ const IdCard = () => {
                     <p>Valid Until: 31 December 2025</p>
                 </div>
             </div>
+            {/* ID Card Download Button */}
             <button
                 onClick={handleDownloadPDF}
                 className="mt-6 bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
