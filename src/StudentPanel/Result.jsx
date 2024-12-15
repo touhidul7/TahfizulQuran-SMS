@@ -171,14 +171,12 @@ const Result = () => {
           </button>
         </form>
       </div>
-      {results ? (
+      {results?.length > 0 && (
         <div className="Result Download Button w-full text-right flex justify-end p-6">
           <button onClick={downloadResultAsPDF} className="w-fit text-md flex gap-2 items-center font-bold ">
             Download <RiDownload2Fill size={25} />
           </button>
         </div>
-      ) : (
-        <></>
       )}
 
       {/* Result Section */}
