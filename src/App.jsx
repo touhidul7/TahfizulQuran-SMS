@@ -172,6 +172,7 @@ const App = () => {
     const web3FormData = new FormData();
     web3FormData.append("access_key", "f5d5e90f-6ea7-455b-b93a-9819968e2790");
     web3FormData.append("studentName", formData.studentNameEn || "N/A");
+    web3FormData.append("subject", "A Student Admission request has submitted");
     web3FormData.append("studentId", studentID || "N/A");
     web3FormData.append("paymentMethod", formData.paymentmethod || "N/A");
     web3FormData.append("paymentNumber", formData.pyamentnumber || "N/A");
