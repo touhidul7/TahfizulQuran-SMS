@@ -9,27 +9,30 @@ const IdCard = () => {
 
     const handleDownloadPDF = () => {
         const idCardElement = document.getElementById("id-card");
-
+    
         html2canvas(idCardElement, {
             scale: 2, // Ensures high resolution
             useCORS: true, // Allows cross-origin images
-            allowTaint: true,
+            allowTaint: true, // Allow usage of external images
         }).then((canvas) => {
-            const imgData = canvas.toDataURL("image/png");
-
-            const pdf = new jsPDF("p", "mm", "a4"); // PDF size A4
+            // Generate the image data from the canvas
+            const imgData = canvas.toDataURL("image/png"); // Use "image/png" for the correct MIME type
+    
+            const pdf = new jsPDF("p", "mm", "a4"); // Initialize jsPDF with A4 size
             const pdfWidth = 210; // A4 width in mm
             const pdfHeight = 297; // A4 height in mm
-
-            const cardWidth = pdfWidth - 40; // Add padding to fit content
+    
+            // Calculate the card dimensions to maintain aspect ratio
+            const cardWidth = pdfWidth - 40; // Subtract margins (20mm on each side)
             const cardHeight = (canvas.height * cardWidth) / canvas.width; // Maintain aspect ratio
-
-            const marginY = (pdfHeight - cardHeight) / 2; // Center vertically
-            pdf.addImage(imgData, "PNG", 20, marginY, cardWidth, cardHeight);
+    
+            // Center the image vertically in the PDF
+            const marginY = (pdfHeight - cardHeight) / 2;
+            pdf.addImage(imgData, "PNG", 20, marginY, cardWidth, cardHeight); // "PNG" for the image format
             pdf.save("student-id-card.pdf");
         });
     };
-
+    
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <div
@@ -46,6 +49,7 @@ const IdCard = () => {
                     src={`${backendFileUrl}/admin/students/${data.studentImage}`}
                     alt="Student Photo"
                     className="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 object-cover mb-4"
+                    
                 />
                 <div>
                     <h4 className="text-lg font-semibold text-center">{data.studentNameEn}</h4>
