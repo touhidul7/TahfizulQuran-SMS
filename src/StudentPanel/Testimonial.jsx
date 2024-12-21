@@ -1,11 +1,49 @@
 import { useOutletContext } from "react-router-dom";
 import "./testimonial.css";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 const Testimonial = () => {
     const { data } = useOutletContext();
     console.log(data);
+
+
+    /* Pdf Download */
+
+    // Function to handle the PDF download
+   const downloadResultAsPDF = () => {
+  const resultSection = document.querySelector(".testimonial");
+
+  // Ensure content is fully visible
+  resultSection.style.width = "2000px"; // Adjust width for landscape layout
+  resultSection.style.margin = "auto"; // Center the content
+  resultSection.style.overflow = "visible"; // Ensure nothing is hidden
+
+  html2canvas(resultSection, { scale: 2, useCORS: true }).then((canvas) => {
+    const imgData = canvas.toDataURL("image/png");
+
+    // Initialize jsPDF in landscape mode
+    const pdf = new jsPDF("l", "mm", "a4"); // 'l' specifies landscape
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    // Add image to the PDF and scale it to fit the page
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save("testimonial.pdf");
+
+    // Reset styles to original
+    resultSection.style.width = "";
+    resultSection.style.margin = "";
+    resultSection.style.overflow = "";
+  });
+};
+
+    
+  /*  */
   return (
-    <div className=" min-h-screen flex items-center justify-cente r">
-      <div className="w-[100%] max-w-[800px] mx-auto mt-5 border-[15px] border-[#15803D] p-10 bg-transparent shadow-lg relative">
+    <div className=" min-h-screen flex flex-col items-center justify-cente r">
+     
+      <div className="w-[100%] max-w-[800px] mx-auto mt-5 border-[15px] border-[#15803D] p-10 bg-transparent shadow-lg relative testimonial">
         <div className="absolute inset-[15px] border-2 border-[#15803D] -z-10"></div>
         <div className="text-center mb-5">
           <img
@@ -67,10 +105,13 @@ const Testimonial = () => {
               </label>
             </li>
           </ul>
-          <p className="pl-0 mt-3">
-            উপজেলা পরিষদ, কলসিনা, গাজীপুর এম অঞ্চলিকন:
+          <p className="pl-0 my-3">
+            সে {data.classname} এ বার্ষিক পররীক্ষায় GPA <input type="text" className="outline-none border-none ring-0 focus:outline-none focus:border-none focus:ring-0 m-0 p-0 w-8"/> পেয়ে উত্তীর্ণ হয়েছে।
           </p>
-          <p className="pl-0">অর্থবাইতিক প্রশিক্ষণ কোর্স:</p>
+          <p className="pl-0 mt-3 text-center">
+            আমার জানা মতে সে উত্তম চরিত্রের অধিকারী। আমি তার সর্বাঙ্গীন সাফল্য কামনা করি।
+          </p>
+          
         </div>
         <div className="mt-8 flex justify-between">
           <div className="text-center border-t border-black pt-2 w-[40%]">
@@ -88,6 +129,7 @@ const Testimonial = () => {
           সপরিবেশ করা: ......................................................
         </div>
       </div>
+      <button className="py-2 px-6 rounded-lg bg-[#2450c0] hover:bg-[#2a478f] text-white my-8" onClick={downloadResultAsPDF}>Download</button>
     </div>
   );
 };

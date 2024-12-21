@@ -170,7 +170,7 @@ const App = () => {
 
     // Prepare data to send via Web3Forms
     const web3FormData = new FormData();
-    web3FormData.append("access_key", "43aafd03-e0ba-4a6f-8546-7beb7ad83110");
+    web3FormData.append("access_key", "4727cb6c-ba2c-4318-8eb4-82caaeac0f6b");
     web3FormData.append("studentName", formData.studentNameEn || "N/A");
     web3FormData.append("subject", "A Student Admission request has submitted");
     web3FormData.append("studentId", studentID || "N/A");
@@ -289,6 +289,7 @@ const App = () => {
               type="file"
               name="studentImage"
               onChange={handleFileChange}
+              required={false}
             />
             <InputField
               label="Student Name (English)"
@@ -305,12 +306,14 @@ const App = () => {
               type="number"
               name="birthCertificate"
               onChange={handleInputChange}
+              required={false}
             />
             <InputField
               label="Date of Birth"
               type="date"
               name="dob"
               onChange={handleInputChange}
+              required={false}
             />
             <InputField
               label="Email (Optional)"
@@ -318,6 +321,7 @@ const App = () => {
               type="email"
               name="email"
               onChange={handleInputChange}
+              required={false}
             />
 
             <SelectField
@@ -382,6 +386,7 @@ const App = () => {
               name="nid"
               type="number"
               onChange={handleInputChange}
+              required={false}
             />
             {/* <InputField
               label="Parents NID (jpg / png support)"

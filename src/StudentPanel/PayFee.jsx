@@ -187,7 +187,7 @@ const PayFee = () => {
     e.preventDefault();
     // Prepare data to send via Web3Forms
     const web3FormData = new FormData();
-    web3FormData.append("access_key", "43aafd03-e0ba-4a6f-8546-7beb7ad83110");
+    web3FormData.append("access_key", "4727cb6c-ba2c-4318-8eb4-82caaeac0f6b");
     web3FormData.append("studentName", studentDetails.studentNameEn || "N/A");
     web3FormData.append("subject", "A Student has submited Fees");
     web3FormData.append("studentId", studentID || "N/A");
