@@ -15,7 +15,8 @@ const Testmn = () => {
     const resultSection = document.querySelector(".testimonial");
 
     // Ensure content is fully visible
-    resultSection.style.width = "2000px"; // Adjust width for landscape layout
+    resultSection.style.width = "1000px"; // Adjust width for landscape layout
+    resultSection.style.height = "710px"; // Adjust width for landscape layout
     resultSection.style.margin = "auto"; // Center the content
     resultSection.style.overflow = "visible"; // Ensure nothing is hidden
 
@@ -42,7 +43,7 @@ const Testmn = () => {
   /*  */
   return (
     <div className=" min-h-screen flex flex-col items-center justify-cente r">
-      <div className="w-[100%] max-w-[800px] mx-auto mt-5 border-[15px] border-[#15803D] p-10 bg-transparent shadow-lg relative testimonial">
+      <div className="w-[1000px] h-[710px] mx-auto mt-5 border-[15px] border-[#15803D] p-10 bg-transparent shadow-lg relative testimonial">
         <div className="absolute inset-[15px] border-2 border-[#15803D] -z-10"></div>
         <div className="text-center mb-5">
           <img
@@ -61,52 +62,37 @@ const Testmn = () => {
           <ul className="list-none space-y-3">
             <li>
               <label className="block">
-                প্রযান করা যাচ্ছে যে, <strong>জনাব/বেশ</strong>:
-                <input
+                প্রযান করা যাচ্ছে যে, <strong>জনাব/বেশ</strong>: <span className="mb-10">{data.studentNameBn}</span>
+                {/* <input
                   type="text"
                   value={data.studentNameBn}
                   placeholder="এখানে কিছু লিখুন"
                   className="border-b-dotted border-none w-[70%] outline-none p-0 pl-2 focus:outline-none focus:border-none"
-                />
+                /> */}
               </label>
             </li>
             <li>
               <label className="block">
-                পিতা :
-                <input
-                  type="text"
-                  placeholder="তোমার বাবার নাম লিখ"
-                  value={data.fatherNameBn}
-                  className=" border-b-dotted border-none w-[70%] outline-none p-0 pl-2"
-                />
+                পিতা : {data.fatherNameBn}
+               
               </label>
             </li>
             <li>
               <label className="block">
-                মাতা :
-                <input
-                  type="text"
-                  value={data.motherNameBn}
-                  placeholder="আপনার মায়ের নাম লিখুন"
-                  className="border-b-dotted border-none w-[70%] outline-none p-0 pl-2"
-                />
+                মাতা : {data.motherNameBn}
+               
               </label>
             </li>
             <li>
               <label className="block">
-                গ্রাম/বাড়ি নং :
-                <input
-                  type="text"
-                  value={
+                গ্রাম/বাড়ি নং : {
                     data.villagePermanent +
                     ", " +
                     data.thanaPreset +
                     ", " +
                     data.distPermanent
                   }
-                  placeholder="এখানে আপনার ঠিকানা লিখুন"
-                  className="border-b-dotted border-none w-[70%] outline-none p-0 pl-2"
-                />
+               
               </label>
             </li>
           </ul>
@@ -114,8 +100,8 @@ const Testmn = () => {
             সে {data.classname} এ বার্ষিক পররীক্ষায় GPA{" "}
             <input
               type="text"
-              className="outline-none border-none ring-0 focus:outline-none focus:border-none focus:ring-0 m-0 p-0 w-8"
-            />{" "}
+              className="outline-none overflow-visible border-none ring-0 focus:outline-none focus:border-none focus:ring-0 m-0 p-0 w-8 h-[30px]"
+            /> {" "}
             পেয়ে উত্তীর্ণ হয়েছে।
           </p>
           <p className="pl-0 mt-3 text-center">
