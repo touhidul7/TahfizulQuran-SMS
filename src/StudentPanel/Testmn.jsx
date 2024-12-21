@@ -1,7 +1,10 @@
 import { useOutletContext } from "react-router-dom";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import "./testimonial.css";
+
 const Testmn = () => {
+
   const { data } = useOutletContext();
   console.log(data);
 
