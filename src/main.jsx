@@ -10,6 +10,7 @@ import NoticeBoard from "./StudentPanel/NoticeBoard";
 import Result from "./StudentPanel/Result";
 import IdCard from "./StudentPanel/IdCard";
 import PayFee from "./StudentPanel/PayFee";
+import Testimonial from "./StudentPanel/testimonial";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/result",
         element: <Result />,
+      },
+      {
+        path: "/testimonial",
+        element: <Testimonial />,
       },
       {
         path: "/idcard",
