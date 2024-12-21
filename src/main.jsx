@@ -10,7 +10,8 @@ import NoticeBoard from "./StudentPanel/NoticeBoard";
 import Result from "./StudentPanel/Result";
 import IdCard from "./StudentPanel/IdCard";
 import PayFee from "./StudentPanel/PayFee";
-import Testimonial from "./StudentPanel/testimonial";
+import Testmn from "./StudentPanel/Testmn";
+
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/testimonial",
-        element: <Testimonial />,
+        element: <Testmn />,
       },
       {
         path: "/idcard",

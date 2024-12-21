@@ -1,8 +1,7 @@
 import { useOutletContext } from "react-router-dom";
-import "./testimonial.css";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-const Testimonial = () => {
+const Testmn = () => {
   const { data } = useOutletContext();
   console.log(data);
 
@@ -147,4 +146,4 @@ const Testimonial = () => {
   );
 };
 
-export default Testimonial;
+export default Testmn;
