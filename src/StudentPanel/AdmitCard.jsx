@@ -80,9 +80,9 @@ const AdmitCard = () => {
               {/* Information Col 1 */}
               <div className=" flex flex-col justify-start w-[40%] gap-2">
                 <div className="flex items-center">
-                  <span className="w-1/2 font-bold">Student ID</span>
+                  <span className="w-1/2 font-bold">Student Name</span>
                   <span className="w-1/2 text-left">
-                    <b>:</b> {data.studentId}
+                    <b>:</b> {data.studentNameEn}
                   </span>
                 </div>
 
@@ -101,7 +101,16 @@ const AdmitCard = () => {
                 </div>
               </div>
               {/* Information Col 2 */}
+
               <div className=" flex flex-col justify-start w-[40%] gap-2">
+
+              <div className="flex items-center">
+                  <span className="w-1/2 font-bold">ID</span>
+                  <span className="w-1/2 text-left">
+                    <b>:</b> {data.studentId}
+                  </span>
+                </div>
+
                 <div className="flex items-center">
                   <span className="w-1/2 font-bold">Gender</span>
                   <span className="w-1/2 text-left">
@@ -116,12 +125,6 @@ const AdmitCard = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center">
-                  <span className="w-1/2 font-bold">Admission Date</span>
-                  <span className="w-1/2 text-left">
-                    <b>:</b> {data.admissiondate}
-                  </span>
-                </div>
               </div>
             </div>
           </div>
