@@ -100,6 +100,7 @@ const Testmn = () => {
             সে {data.classname} এ বার্ষিক পররীক্ষায় GPA{" "}
             <input
               type="text"
+              placeholder="0.00"
               className="outline-none overflow-visible border-none ring-0 focus:outline-none focus:border-none focus:ring-0 m-0 p-0 w-8 h-[30px]"
             /> {" "}
             পেয়ে উত্তীর্ণ হয়েছে।
