@@ -14,7 +14,7 @@ const Auth = () => {
 
     axios.get(`${backendApiUrl}/students/admission/${username}`)
       .then(function (response) {
-        if (response.data.student.length != 0) {
+        if (response.data.student.length != 0 && response.data.student.status == 1) {
           setUser(true);
           toast.success("Successfully Logged In!");
           setData(response.data.student)

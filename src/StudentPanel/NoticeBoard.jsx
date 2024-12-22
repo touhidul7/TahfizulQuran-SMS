@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -19,7 +20,7 @@ const NoticeBoard = () => {
       // handle error
       console.log(error);
     })
-  },)
+  },[])
 
  
   return (

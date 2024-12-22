@@ -59,8 +59,8 @@ const Testmn = () => {
           </h2>
         </div>
         <div className="text-[1rem] leading-7 text-gray-800">
-          <ul className="list-none space-y-3">
-            <li>
+          <div className=" flex gap-2 flex-wrap justify-center py-20">
+            <div>
               <label className="block">
                 প্রযান করা যাচ্ছে যে, <strong>জনাব/বেশ</strong>: <span className="mb-10">{data.studentNameBn}</span>
                 {/* <input
@@ -70,20 +70,20 @@ const Testmn = () => {
                   className="border-b-dotted border-none w-[70%] outline-none p-0 pl-2 focus:outline-none focus:border-none"
                 /> */}
               </label>
-            </li>
-            <li>
+            </div>
+            <div>
               <label className="block">
                 পিতা : {data.fatherNameBn}
                
               </label>
-            </li>
-            <li>
+            </div>
+            <div>
               <label className="block">
                 মাতা : {data.motherNameBn}
                
               </label>
-            </li>
-            <li>
+            </div>
+            <div>
               <label className="block">
                 গ্রাম/বাড়ি নং : {
                     data.villagePermanent +
@@ -92,11 +92,9 @@ const Testmn = () => {
                     ", " +
                     data.distPermanent
                   }
-               
               </label>
-            </li>
-          </ul>
-          <p className="pl-0 my-3">
+            </div>
+            <p className="pl-0">
             সে {data.classname} এ বার্ষিক পররীক্ষায় GPA{" "}
             <input
               type="text"
@@ -105,6 +103,8 @@ const Testmn = () => {
             /> {" "}
             পেয়ে উত্তীর্ণ হয়েছে।
           </p>
+          </div>
+          
           <p className="pl-0 mt-3 text-center">
             আমার জানা মতে সে উত্তম চরিত্রের অধিকারী। আমি তার সর্বাঙ্গীন সাফল্য
             কামনা করি।
