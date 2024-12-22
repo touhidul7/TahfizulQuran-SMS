@@ -47,7 +47,7 @@ const AdmitCard = () => {
 
       // Add image to the PDF and scale it to fit the page
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save("testimonial.pdf");
+      pdf.save("admitcard.pdf");
 
       // Reset styles to original
       resultSection.style.width = "";
