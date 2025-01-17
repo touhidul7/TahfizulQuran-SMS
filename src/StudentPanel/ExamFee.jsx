@@ -7,20 +7,19 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import jsPDF from "jspdf";
 
-const PayFee = () => {
+const ExamFee= () => {
   const [studentID, setStudentID] = useState("");
   const [date, setDate] = useState("");
   const [submitData, setSubmitData] = useState(false);
   const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
-  console.log(date);
-  
-
+  const [terms, setTerms] = useState([]);
   const [result, setResult] = useState("");
   // const [classname, setClassname] = useState("");
   const [studentDetails, setStudentDetails] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [formData, setFormData] = useState({});
   const [invoiceNumber, setInvoiceNumber] = useState("");
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -28,6 +27,26 @@ const PayFee = () => {
       [name]: value,
     }));
   };
+  console.log(formData);
+  
+  
+/* Fetch Data From Backend */
+
+  useEffect(() => {
+    axios
+     .get(`${backendApiUrl}/getExamName`)
+     .then(function (response) {
+       setTerms(response.data.data);
+     })
+     .catch(function (error) {
+       console.log(error);
+       toast.error("Result Not Found");
+     });
+  }, [backendApiUrl]);
+
+  /* ----------- */
+
+ 
 
   const PaymentOptions = [
     { label: "Select Payment", value: "" },
@@ -135,16 +154,16 @@ const PayFee = () => {
     try {
       // First, check if fee data exists for the given student ID and date
       const feeResponse = await fetch(
-        `${backendApiUrl}/getStudent/fee/${studentID}/${date}`
+        `http://192.168.1.2:8000/api/student/getExamFee/${studentID}/${date}`//${backendApiUrl}/getStudent/fee/
       );
 
       if (feeResponse.ok) {
         const feeData = await feeResponse.json();
 
-        if (feeData.fees && feeData.fees.length > 0) {
+        if (feeData.examFees && feeData.examFees.length > 0) {
           // Fee data found, show a message and do nothing further
           toast.error(
-            "Fee for this student and month has already been recorded."
+            " Fee for this student and month has already been recorded."
           );
           setStudentDetails(null);
           return;
@@ -191,7 +210,7 @@ const PayFee = () => {
     const web3FormData = new FormData();
     web3FormData.append("access_key", "4727cb6c-ba2c-4318-8eb4-82caaeac0f6b");
     web3FormData.append("studentName", studentDetails.studentNameEn || "N/A");
-    web3FormData.append("subject", "A Student has submited Fees");
+    web3FormData.append("subject", "A Student has submited Exam Fees");
     web3FormData.append("studentId", studentID || "N/A");
     web3FormData.append("paymentMethod", formData.pType || "N/A");
     web3FormData.append("paymentNumber", formData.pRef || "N/A");
@@ -225,10 +244,12 @@ const PayFee = () => {
     try {
       const finalFormData = {
         ...formData,
-        stdName: studentDetails.studentNameEn,
-        roll: studentID,
-        course: studentDetails.classname,
-        cDate: date,
+        name: studentDetails.studentNameEn,
+        class: studentDetails.classname,
+        examTerm: formData.terms,
+        sPhone: studentDetails.fatherMobile,
+        studentId: studentDetails.studentId,
+        examDate: date,
       };
       const formDataToSend = new FormData();
       Object.entries(finalFormData).forEach(([key, value]) => {
@@ -237,7 +258,7 @@ const PayFee = () => {
       console.log(formDataToSend);
 
       const response = await axios.post(
-        `${backendApiUrl}/students/fee`,
+        `http://192.168.1.2:8000/api/student/examFee`,//${backendApiUrl}/students/fee
         formDataToSend,
         {
           headers: {
@@ -280,13 +301,32 @@ const PayFee = () => {
                 label="Student ID"
                 name="studentid"
                 onChange={(e) => setStudentID(e.target.value)}
+                required={true}
               />
               <InputField
-                label="Fee Month"
+                label="Exam Time"
                 name="date"
                 type="month"
                 onChange={(e) => setDate(e.target.value)}
               />
+              <div>
+              <label htmlFor="classname" className="block mb-1">
+                Select Exam Term
+              </label>
+              <select
+                name="terms"
+                id="terms"
+                className="w-full border rounded px-2 py-1"
+                onChange={handleInputChange}
+              >
+                <option value="">Select Exams Term</option>
+                {terms?.map((item) => (
+                  <option key={item.id} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
             </FormSection>
           </form>
           {/*  */}
@@ -338,7 +378,7 @@ const PayFee = () => {
                 <FormSection title="Payment Information">
                   <SelectField
                     label="Select Payment"
-                    name="pType"
+                    name="pMethod"
                     options={PaymentOptions}
                     onChange={handleInputChange}
                   />
@@ -346,18 +386,18 @@ const PayFee = () => {
                     <>
                     <InputField
                       label="Payment Phone Number"
-                      name="pRef"
+                      name="pNumber"
                       onChange={handleInputChange}
                     />
                     
                     <InputField
                       label="Transaction ID"
-                      name="pDetails"
+                      name="txid"
                       onChange={handleInputChange}
                     />
                     </>)}
                     <InputField
-                      label="Fee Amount"
+                      label="Exam Fee Amount"
                       name="amount"
                       onChange={handleInputChange}
                     />
@@ -381,7 +421,7 @@ const PayFee = () => {
   );
 };
 
-export default PayFee;
+export default ExamFee;
 
 const FormSection = ({ title, children }) => (
   <fieldset className="border border-green-600 p-4 mb-4">

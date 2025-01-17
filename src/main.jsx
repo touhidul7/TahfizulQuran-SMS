@@ -12,6 +12,7 @@ import IdCard from "./StudentPanel/IdCard";
 import PayFee from "./StudentPanel/PayFee";
 import Testmn from "./StudentPanel/Testmn";
 import AdmitCard from "./StudentPanel/AdmitCard";
+import ExamFee from "./StudentPanel/ExamFee";
 
 
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/admitcard",
         element: <AdmitCard />,
+      },
+      {
+        path: "/examfee",
+        element: <ExamFee />,
       },
       {
         path: "/idcard",

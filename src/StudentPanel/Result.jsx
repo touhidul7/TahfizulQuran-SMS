@@ -14,6 +14,8 @@ const Result = () => {
   const [formData, setFormData] = useState();
 
   const { data } = useOutletContext();
+  console.log(data);
+  
   const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
 
   const calculateGrade = (marks) => {
