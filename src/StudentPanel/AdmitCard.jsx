@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+=======
+>>>>>>> parent of f0905c1 (update)
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 import { useOutletContext } from "react-router-dom";
@@ -8,12 +11,16 @@ import jsPDF from "jspdf";
 import "./testimonial.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import toast from "react-hot-toast";
 import InputField from "../Components/InputField";
+=======
+>>>>>>> parent of f0905c1 (update)
 
 const AdmitCard = () => {
   const { data } = useOutletContext();
   const [classes, setClasses] = useState(null);
+<<<<<<< HEAD
   const [formData, setFormData] = useState();
   const [terms, setTerms] = useState([]);
   const [studentID, setStudentID] = useState();
@@ -71,6 +78,14 @@ const AdmitCard = () => {
         toast.error("Result Not Found");
       });
     axios
+=======
+  console.log(classes);
+  const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
+  /* Pdf Download */
+
+  useEffect(() => {
+    axios
+>>>>>>> parent of f0905c1 (update)
       .get(`${backendApiUrl}/getCourse/${data.classname}`)
       .then(function (response) {
         setClasses(response.data.data);
@@ -113,6 +128,7 @@ const AdmitCard = () => {
 
   /*  */
   return (
+<<<<<<< HEAD
     <>
       <div className="px-10 py-10 lg:w-[70%] m-auto">
         <form>
@@ -173,6 +189,49 @@ const AdmitCard = () => {
                 </p>
                 <p>বিদ্যালয় কোডঃ ৭০৫০৮৩৩২০</p>
                 <p>৩৩ নং ওয়ার্ড মহানগর, রংপুর।</p>
+=======
+    <div className=" min-h-screen flex flex-col items-center justify-center">
+      <div className="w-[1000px] flex flex-col justify-between h-[710px] mx-auto mt-5 border-[15px] border-[#15803D] p-10 bg-transparent shadow-lg relative testimonial">
+        <div className="absolute inset-[15px] border-2 border-[#15803D] -z-10"></div>
+        <div>
+          <div className="text-center mb-2">
+            <img
+              src="./logo.jpg"
+              alt="Bangladesh Logo"
+              className="w-[70px] mx-auto mb-3"
+            />
+            <h1 className="text-green-700 text-[1.8rem] font-semibold my-1">
+              মেধা বিকাশ শিশু নিকেতন এন্ড কুরআন একাডেমি
+            </h1>
+            <h2 className="text-purple-700 text-[1.3rem] font-medium">
+              প্রবেশ পত্র
+            </h2>
+          </div>
+          <div className="idcard-content">
+            <div className="flex w-full justify-between">
+              {/* Information Col 1 */}
+              <div className=" flex flex-col justify-start w-[40%] gap-2">
+                <div className="flex items-center">
+                  <span className="w-1/2 font-bold">Student Name</span>
+                  <span className="w-1/2 text-left">
+                    <b>:</b> {data.studentNameEn}
+                  </span>
+                </div>
+
+                <div className="flex items-center">
+                  <span className="w-1/2 font-bold">Father's Name</span>
+                  <span className="w-1/2 text-left">
+                    <b>:</b> {data.fatherNameEn}
+                  </span>
+                </div>
+
+                <div className="flex items-center">
+                  <span className="w-1/2 font-bold">Mother's Name</span>
+                  <span className="w-1/2 text-left">
+                    <b>:</b> {data.motherNameEn}
+                  </span>
+                </div>
+>>>>>>> parent of f0905c1 (update)
               </div>
             </div>
             <div className="idcard-content">
@@ -194,6 +253,7 @@ const AdmitCard = () => {
                     </span>
                   </div>
 
+<<<<<<< HEAD
                   <div className="flex items-center">
                     <span className="w-1/2 font-bold">Father's Name</span>
                     <span className="w-1/2 text-left">
@@ -207,6 +267,15 @@ const AdmitCard = () => {
                       <b>:</b> {data.motherNameEn}
                     </span>
                   </div>
+=======
+              <div className=" flex flex-col justify-start w-[40%] gap-2">
+
+              <div className="flex items-center">
+                  <span className="w-1/2 font-bold">ID</span>
+                  <span className="w-1/2 text-left">
+                    <b>:</b> {data.studentId}
+                  </span>
+>>>>>>> parent of f0905c1 (update)
                 </div>
                 {/* Information Col 2 */}
 
@@ -232,10 +301,12 @@ const AdmitCard = () => {
                     </span>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
 
+<<<<<<< HEAD
           <div className="subjects-section flex flex-col justify-center w-full">
             <div className="heading text-center text-xl font-bold pb-4">
               NAME OF SUBJECTS
@@ -248,6 +319,11 @@ const AdmitCard = () => {
                 </div>
               ))}
             </div>
+=======
+        <div className="subjects-section flex flex-col justify-center w-full">
+          <div className="heading text-center text-2xl font-bold py-4">
+            NAME OF SUBJECTS
+>>>>>>> parent of f0905c1 (update)
           </div>
 
           <div className="">
@@ -259,6 +335,25 @@ const AdmitCard = () => {
                   Hall and without any electronic device.
                 </p>
               </div>
+<<<<<<< HEAD
+=======
+            ))}
+          </div>
+        </div>
+
+        <div className="">
+          <div className="Content pt-2">
+            <div className="hading font-bold mb-1">Directions:</div>
+            <div className=" pl-4">
+              <p>
+                1. The Examinee must bring the Admit Card in the Examination
+                Hall and without any electronic device.
+              </p>
+              <p>
+                2. The examinee must sign the attendance sheet for each subject,
+                or they will be marked absent.
+              </p>
+>>>>>>> parent of f0905c1 (update)
             </div>
 
             <div className="mt-8 flex justify-between">
@@ -290,9 +385,12 @@ const AdmitCard = () => {
 };
 
 export default AdmitCard;
+<<<<<<< HEAD
 const FormSection = ({ title, children }) => (
   <fieldset className="border border-green-600 p-4 mb-4 flex flex-col justify-end">
     <legend className="px-2 text-lg text-green-700">{title}</legend>
     <div className="grid grid-cols-1 gap-4">{children}</div>
   </fieldset>
 );
+=======
+>>>>>>> parent of f0905c1 (update)

@@ -3,10 +3,10 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import "./testimonial.css";
 
-
 const Testmn = () => {
 
   const { data } = useOutletContext();
+  console.log(data);
 
   /* Pdf Download */
 
@@ -46,28 +46,19 @@ const Testmn = () => {
       <div className="w-[1000px] h-[710px] mx-auto mt-5 border-[15px] border-[#15803D] p-10 bg-transparent shadow-lg relative testimonial">
         <div className="absolute inset-[15px] border-2 border-[#15803D] -z-10"></div>
         <div className="text-center mb-5">
-          {/* <img
+          <img
             src="./logo.jpg"
             alt="Bangladesh Logo"
             className="w-[70px] mx-auto mb-3"
-          /> */}
-          <h1 className="text-[#2DB75B] text-[30px] leading-tight font-semibold mb-">
-          মেধা বিকাশ শিশু নিকেতন এন্ড কোরআন একাডেমি
+          />
+          <h1 className="text-green-700 text-[1.8rem] font-semibold my-1">
+            মেধা বিকাশ শিশু নিকেতন এন্ড কুরআন একাডেমি
           </h1>
-          <h1 className="text-[#1A56DB] text-[25px] font-semibold my-1">
-          Medha Bikash Shisho Niketan And Quran Academy
-          </h1>
-          <div className="text-center  font-[450] text-md">
-            <p>স্থাপিতঃ ২০<span className="font-poppins">১</span>৮ ইং,</p>
-            <p>বিদ্যালয় কোডঃ ৭০৫০৮৩৩২০</p>
-            <p>৩৩ নং ওয়ার্ড মহানগর, রংপুর।</p>
-          </div>
-          
-        </div>
-        <div className="text-[1rem] leading-7 text-gray-800">
-        <h2 className="text-purple-700 text-[1.3rem] font-medium text-center">
+          <h2 className="text-purple-700 text-[1.3rem] font-medium">
             প্রশংসা পত্র
           </h2>
+        </div>
+        <div className="text-[1rem] leading-7 text-gray-800">
           <div className=" flex gap-2 flex-wrap justify-center py-20">
             <div>
               <label className="block">
@@ -108,7 +99,7 @@ const Testmn = () => {
             <input
               type="text"
               placeholder="0.00"
-              className="outline-none overflow-visible border-none ring-0 focus:outline-none focus:border-none focus:ring-0 m-0 p-0 w-9 h-[30px]"
+              className="outline-none overflow-visible border-none ring-0 focus:outline-none focus:border-none focus:ring-0 m-0 p-0 w-8 h-[30px]"
             /> {" "}
             পেয়ে উত্তীর্ণ হয়েছে।
           </p>
