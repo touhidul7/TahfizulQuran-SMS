@@ -143,7 +143,7 @@ const AdmitCard = () => {
                 
               </p>
               <h2 className="text-purple-700 text-[1.3rem] w-fit font-medium text-center pt-1 px-5 rounded-md ">
-                প্রশংসা পত্র
+                প্রবেশ পত্র
               </h2>
             </div>
             <div className="flex w-full justify-between">
