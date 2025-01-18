@@ -15,7 +15,7 @@ const Result = () => {
 
   const { data } = useOutletContext();
   console.log(data);
-  
+
   const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
 
   const calculateGrade = (marks) => {
@@ -112,34 +112,32 @@ const Result = () => {
   const gpa =
     results?.length > 0 ? calculateGPA(results[0].subjects_marks) : null;
 
+  /* Pdf Download */
 
+  // Function to handle the PDF download
+  const downloadResultAsPDF = () => {
+    const resultSection = document.querySelector(".Result-Section");
 
-    /* Pdf Download */
+    // Apply desktop styles to ensure consistent layout
+    resultSection.style.width = "800px"; // Fixed width for desktop view
+    resultSection.style.margin = "auto"; // Center the content
 
-    // Function to handle the PDF download
-    const downloadResultAsPDF = () => {
-        const resultSection = document.querySelector(".Result-Section");
-      
-        // Apply desktop styles to ensure consistent layout
-        resultSection.style.width = "800px"; // Fixed width for desktop view
-        resultSection.style.margin = "auto"; // Center the content
-      
-        html2canvas(resultSection, { scale: 2 }).then((canvas) => {
-          const imgData = canvas.toDataURL("image/png");
-          const pdf = new jsPDF("p", "mm", "a4");
-      
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      
-          pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-          pdf.save("exam-result.pdf");
-      
-          // Reset styles to original
-          resultSection.style.width = "";
-          resultSection.style.margin = "";
-        });
-      };
-    /*  */
+    html2canvas(resultSection, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("exam-result.pdf");
+
+      // Reset styles to original
+      resultSection.style.width = "";
+      resultSection.style.margin = "";
+    });
+  };
+  /*  */
 
   return (
     <div className="container mx-auto my-10">
@@ -175,7 +173,10 @@ const Result = () => {
       </div>
       {results?.length > 0 && (
         <div className="Result Download Button w-full text-right flex justify-end p-6">
-          <button onClick={downloadResultAsPDF} className="w-fit text-md flex gap-2 items-center font-bold ">
+          <button
+            onClick={downloadResultAsPDF}
+            className="w-fit text-md flex gap-2 items-center font-bold "
+          >
             Download <RiDownload2Fill size={25} />
           </button>
         </div>

@@ -154,7 +154,7 @@ const ExamFee= () => {
     try {
       // First, check if fee data exists for the given student ID and date
       const feeResponse = await fetch(
-        `http://192.168.1.2:8000/api/student/getExamFee/${studentID}/${date}`//${backendApiUrl}/getStudent/fee/
+        `${backendApiUrl}/student/getExamFee/${studentID}/${date}`//${backendApiUrl}/getStudent/fee/
       );
 
       if (feeResponse.ok) {
@@ -258,7 +258,7 @@ const ExamFee= () => {
       console.log(formDataToSend);
 
       const response = await axios.post(
-        `http://192.168.1.2:8000/api/student/examFee`,//${backendApiUrl}/students/fee
+        `${backendApiUrl}/student/examFee`,//${backendApiUrl}/students/fee
         formDataToSend,
         {
           headers: {
