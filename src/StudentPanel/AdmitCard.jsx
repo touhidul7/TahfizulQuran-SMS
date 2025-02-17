@@ -153,10 +153,10 @@ const AdmitCard = () => {
          className="w-[70px] mx-auto mb-3"
        /> */}
                 <h1 className="text-[#2DB75B] text-[30px] leading-tight font-semibold m-0 p-0 -mt-4">
-                  মেধা বিকাশ শিশু নিকেতন এন্ড কোরআন একাডেমি
+                  মেধা বিকাশ শিশু নিকেতন এন্ড কুরআন একাডেমি
                 </h1>
                 <h1 className="text-[#1A56DB] text-[22px] font-semibold -mt-2">
-                  Medha Bikash Shisho Niketan And Quran Academy
+                  Medha Bikash Shishoo Nikatan And Quran Academy
                 </h1>
                 <div className="text-center  font-[450] text-md">
                   <p>
