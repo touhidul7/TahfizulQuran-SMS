@@ -270,7 +270,7 @@ const Result = () => {
         {/* GPA Information */}
         <div className="alert alert-info text-center bg-blue-100 mb-6 text-blue-800 p-4 rounded-md">
           <h2 className="text-center text-2xl font-semibold ">
-          {results?.length > 0 ? results[0]?.examination :"Exam Name"}
+            {results?.length > 0 ? results[0]?.examination : "Exam Name"}
           </h2>
           <h3 className="text-center text-xl font-semibold ">Mark Sheet</h3>
         </div>
@@ -315,6 +315,66 @@ const Result = () => {
             </tbody>
           </table>
         </div>
+        {/* Radio Input */}
+        <div className="">
+          <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">
+            ফলাফল
+          </h3>
+          <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+              <div className="flex items-center ps-3">
+                <input
+                  id="horizontal-list-radio-license"
+                  type="radio"
+                  value=""
+                  name="list-radio"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label
+                  htmlFor="horizontal-list-radio-license"
+                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Good{" "}
+                </label>
+              </div>
+            </li>
+            <li className="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+              <div className="flex items-center ps-3">
+                <input
+                  id="horizontal-list-radio-id"
+                  type="radio"
+                  value=""
+                  name="list-radio"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label
+                  htmlFor="horizontal-list-radio-id"
+                  className="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Better
+                </label>
+              </div>
+            </li>
+            <li className="w-full  border-gray-200 sm:border-b-0  dark:border-gray-600">
+              <div className="flex items-center ps-3">
+                <input
+                  id="horizontal-list-radio-military"
+                  type="radio"
+                  value=""
+                  name="list-radio"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label
+                  htmlFor="horizontal-list-radio-military"
+                  className="w-full  ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Best
+                </label>
+              </div>
+            </li>
+          </ul>
+        </div>
+        {/* Radio End */}
       </div>
 
       {/* Search Again Button */}

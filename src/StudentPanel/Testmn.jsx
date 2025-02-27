@@ -85,6 +85,7 @@ const Testmn = () => {
       .get(`${backendApiUrl}/getExamResult/${data.studentId}`)
       .then(function (response) {
         const results = response.data.data;
+        console.log(response.data.data);
 
         // Filter results based on the selected examination term and class
         const filteredResults = results.filter(
@@ -95,10 +96,11 @@ const Testmn = () => {
 
         if (filteredResults.length > 0) {
           setResults(filteredResults);
+          console.log(filteredResults);
           toast.success("Successfully Loaded Data!");
         } else {
           setResults([]);
-          toast.error("You Are Not Eligible For Testimonial");
+          toast.error("No results found for the selected term and class.");
         }
       })
       .catch(function (error) {
