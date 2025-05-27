@@ -7,7 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import jsPDF from "jspdf";
 
-const ExamFee= () => {
+const ExamFee = () => {
   const [studentID, setStudentID] = useState("");
   const [date, setDate] = useState("");
   const [submitData, setSubmitData] = useState(false);
@@ -29,25 +29,25 @@ const ExamFee= () => {
     }));
   };
   console.log(formData);
-  
-  
-/* Fetch Data From Backend */
+
+
+  /* Fetch Data From Backend */
 
   useEffect(() => {
     axios
-     .get(`${backendApiUrl}/getExamName`)
-     .then(function (response) {
-       setTerms(response.data.data);
-     })
-     .catch(function (error) {
-       console.log(error);
-       toast.error("Result Not Found");
-     });
+      .get(`${backendApiUrl}/getExamName`)
+      .then(function (response) {
+        setTerms(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        toast.error("Result Not Found");
+      });
   }, [backendApiUrl]);
 
   /* ----------- */
 
- 
+
 
   const PaymentOptions = [
     { label: "Select Payment", value: "" },
@@ -213,9 +213,11 @@ const ExamFee= () => {
     web3FormData.append("studentName", studentDetails.studentNameEn || "N/A");
     web3FormData.append("subject", "A Student has submited Exam Fees");
     web3FormData.append("studentId", studentID || "N/A");
-    web3FormData.append("paymentMethod", formData.pType || "N/A");
-    web3FormData.append("paymentNumber", formData.pRef || "N/A");
-    web3FormData.append("transactionId", studentDetails.trxid || "N/A");
+    web3FormData.append("paymentMethod", formData.pMethod || "N/A");
+    if (formData.pMethod != "cash") {
+      web3FormData.append("paymentNumber", formData.pNumber || "N/A");
+      web3FormData.append("transactionId", formData.txid || "N/A");
+    }
     web3FormData.append("amount", formData.amount || "N/A");
     web3FormData.append("className", studentDetails.classname || "N/A");
 
@@ -311,23 +313,23 @@ const ExamFee= () => {
                 onChange={(e) => setDate(e.target.value)}
               />
               <div>
-              <label htmlFor="classname" className="block mb-1">
-                Select Exam Term
-              </label>
-              <select
-                name="terms"
-                id="terms"
-                className="w-full border rounded px-2 py-1"
-                onChange={handleInputChange}
-              >
-                <option value="">Select Exams Term</option>
-                {terms?.map((item) => (
-                  <option key={item.id} value={item.name}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <label htmlFor="classname" className="block mb-1">
+                  Select Exam Term
+                </label>
+                <select
+                  name="terms"
+                  id="terms"
+                  className="w-full border rounded px-2 py-1"
+                  onChange={handleInputChange}
+                >
+                  <option value="">Select Exams Term</option>
+                  {terms?.map((item) => (
+                    <option key={item.id} value={item.name}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </FormSection>
           </form>
           {/*  */}
@@ -383,25 +385,26 @@ const ExamFee= () => {
                     options={PaymentOptions}
                     onChange={handleInputChange}
                   />
-                    {formData.pType !== "cash" && (
+                  {formData.pMethod !== "cash" && (
                     <>
-                    <InputField
-                      label="Payment Phone Number"
-                      name="pNumber"
-                      onChange={handleInputChange}
-                    />
-                    
-                    <InputField
-                      label="Transaction ID"
-                      name="txid"
-                      onChange={handleInputChange}
-                    />
+                      <InputField
+                        label="Payment Phone Number"
+                        name="pNumber"
+                        onChange={handleInputChange}
+                      />
+
+                      <InputField
+                        label="Transaction ID"
+                        name="txid"
+                        onChange={handleInputChange}
+                      />
                     </>)}
-                    <InputField
-                      label="Exam Fee Amount"
-                      name="amount"
-                      onChange={handleInputChange}
-                    />
+
+                  <InputField
+                    label="Exam Fee Amount"
+                    name="amount"
+                    onChange={handleInputChange}
+                  />
                 </FormSection>
                 {submitData ? (
                   "Thank You For Your Payment"

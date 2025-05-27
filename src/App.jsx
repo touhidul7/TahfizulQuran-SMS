@@ -34,7 +34,7 @@ const App = () => {
 
     //console.log(`Generated Random Number: ${randomNumber}`);
   };
- 
+
   /* Fetch class data */
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const App = () => {
     };
 
     fetchClasses();
-  },[backendApiUrl]);
+  }, [backendApiUrl]);
 
   /* Fetch class data end */
 
@@ -176,8 +176,10 @@ const App = () => {
     web3FormData.append("subject", "A Student Admission request has submitted");
     web3FormData.append("studentId", studentID || "N/A");
     web3FormData.append("paymentMethod", formData.paymentmethod || "N/A");
-    web3FormData.append("paymentNumber", formData.pyamentnumber || "N/A");
-    web3FormData.append("transactionId", formData.trxid || "N/A");
+    if (formData.paymentmethod != "cash") {
+      web3FormData.append("paymentNumber", formData.pyamentnumber || "N/A");
+      web3FormData.append("transactionId", formData.trxid || "N/A");
+    }
     web3FormData.append("className", formData.classname || "N/A");
 
     try {
@@ -302,7 +304,7 @@ const App = () => {
               name="studentNameBn"
               onChange={handleInputChange}
             />
-             <InputField
+            <InputField
               label="Birth Certificate No."
               type="number"
               name="birthCertificate"
@@ -339,7 +341,7 @@ const App = () => {
               value={formData.bloodGroup}
               onChange={handleInputChange}
             />
-           
+
             {/*  <InputField
               label="Birth Certificate (jpg / png support)"
               type="file"
@@ -503,19 +505,19 @@ const App = () => {
               value={formData.paymentmethod}
               onChange={handleInputChange}
             />
-             {formData.paymentmethod !== "cash"  && (
-            <>
-            <InputField
-              label="Payment Phone Number"
-              name="pyamentnumber"
-              onChange={handleInputChange}
-            />
-            <InputField
-              label="Transaction ID"
-              name="trxid"
-              onChange={handleInputChange}
-            />
-            </>
+            {formData.paymentmethod !== "cash" && (
+              <>
+                <InputField
+                  label="Payment Phone Number"
+                  name="pyamentnumber"
+                  onChange={handleInputChange}
+                />
+                <InputField
+                  label="Transaction ID"
+                  name="trxid"
+                  onChange={handleInputChange}
+                />
+              </>
             )}
             <InputField
               label="Admission Date"
