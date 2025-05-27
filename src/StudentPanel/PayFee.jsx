@@ -194,8 +194,10 @@ const PayFee = () => {
     web3FormData.append("subject", "A Student has submited Fees");
     web3FormData.append("studentId", studentID || "N/A");
     web3FormData.append("paymentMethod", formData.pType || "N/A");
-    web3FormData.append("paymentNumber", formData.pRef || "N/A");
-    web3FormData.append("transactionId", studentDetails.trxid || "N/A");
+    if (formData.pType != "cash") {
+      web3FormData.append("paymentNumber", formData.pRef || "N/A");
+      web3FormData.append("transactionId", studentDetails.trxid || "N/A");
+    }
     web3FormData.append("amount", formData.amount || "N/A");
     web3FormData.append("className", studentDetails.classname || "N/A");
 
