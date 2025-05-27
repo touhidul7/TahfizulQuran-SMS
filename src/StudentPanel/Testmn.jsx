@@ -196,10 +196,9 @@ const Testmn = () => {
               </h1>
               <div className="text-center  font-[450] text-md">
                 <p>
-                  স্থাপিতঃ ২০<span className="font-poppins">১</span>৮ ইং,
+                  স্থাপিতঃ ২০২২ ইং,
                 </p>
-                <p>বিদ্যালয় কোডঃ ৭০৫০৮৩৩২০</p>
-                <p>৩৩ নং ওয়ার্ড মহানগর, রংপুর।</p>
+                <p>নিয়ামত, পান্ডার দিঘি (ঈদগাহ মাঠ সংলগ্ন) বুড়িরহাট রোড, রংপুর।</p>
               </div>
             </div>
             <div className="text-[1rem] leading-7 text-gray-800">
@@ -209,14 +208,8 @@ const Testmn = () => {
               <div className=" flex gap-2 flex-wrap justify-center py-20">
                 <div>
                   <label className="block">
-                    প্রযান করা যাচ্ছে যে, <strong>জনাব/বেশ</strong>:{" "}
+                    এই মর্মে প্রমাণ করা যাচ্ছে যে, {/* <strong>জনাব/বেশ</strong>: */}{" "}
                     <span className="mb-10">{data.studentNameBn}</span>
-                    {/* <input
-                  type="text"
-                  value={data.studentNameBn}
-                  placeholder="এখানে কিছু লিখুন"
-                  className="border-b-dotted border-none w-[70%] outline-none p-0 pl-2 focus:outline-none focus:border-none"
-                /> */}
                   </label>
                 </div>
                 <div>
@@ -237,11 +230,6 @@ const Testmn = () => {
                 </div>
                 <p className="pl-0">
                   সে {data.classname} এ বার্ষিক পররীক্ষায় GPA {gpa} {" "}
-                  {/* <input
-              type="text"
-              placeholder="0.00"
-              className="outline-none overflow-visible border-none ring-0 focus:outline-none focus:border-none focus:ring-0 m-0 p-0 w-9 h-[30px]"
-            /> {" "} */}
                   পেয়ে উত্তীর্ণ হয়েছে।
                 </p>
               </div>
