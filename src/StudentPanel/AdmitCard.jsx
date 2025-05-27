@@ -147,11 +147,7 @@ const AdmitCard = () => {
             <div className="absolute inset-[15px] border-2 border-[#15803D] -z-10"></div>
             <div>
               <div className="text-center mb-2 relative">
-                {/* <img
-         src="./logo.jpg"
-         alt="Bangladesh Logo"
-         className="w-[70px] mx-auto mb-3"
-       /> */}
+
                 <h1 className="text-[#2DB75B] text-[30px] leading-tight font-semibold m-0 p-0 -mt-4">
                   আল মকবুল তাহফিজুল কুরআন একাডেমী ও হিফজ মাদরাসা
                 </h1>
@@ -164,6 +160,7 @@ const AdmitCard = () => {
                   </p>
                   <p>নিয়ামত, পান্ডার দিঘি (ঈদগাহ মাঠ সংলগ্ন) বুড়িরহাট রোড, রংপুর।</p>
                 </div>
+                {data.studentImage!=null ?(
                 <img
                   src={`${backendFileUrl}/admin/students/${data.studentImage}`}
                   
@@ -172,6 +169,16 @@ const AdmitCard = () => {
                   onError={() => console.log("Image failed to load")}
                   className="w-28 h-28 mx-auto border-2 border-blue-500 object-cover mb-4 absolute top-0 right-0 mt-10"
                 />
+                ):(
+                  <img
+                  src="/img/user.png"
+                  
+                  alt="Student Photo"
+                  onLoad={() => console.log("Image loaded")}
+                  onError={() => console.log("Image failed to load")}
+                  className="w-28 h-28 mx-auto border-2 border-blue-500 object-cover mb-4 absolute top-0 right-0 mt-10"
+                />
+                )}
               </div>
               <div className="idcard-content">
                 <div className="text-center flex flex-col items-center justify-center">

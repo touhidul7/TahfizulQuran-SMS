@@ -7,7 +7,7 @@ const IdCard = () => {
   const backendFileUrl = import.meta.env.VITE_FILE_BASE_URL;
   const { data } = useOutletContext();
 
-  // console.log("IdCard Data:", data);
+  console.log("IdCard Data:", data);
 
   /* Date formater */
   const formatDate = (dateString) => {
@@ -62,11 +62,19 @@ const getOneYearLater = (dateString) => {
         <div className="bg-blue-500 text-white py-2 rounded-t-lg mb-4">
           <p className="font-semibold text-center">Student ID Card</p>
         </div>
+        {data.studentImage!=null?(
         <img
           src={`${backendFileUrl}/admin/students/${data.studentImage}`}
           alt="Student Photo"
           className="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 object-cover mb-4"
         />
+        ):(
+          <img
+          src="/img/user.png"
+          alt="Student Photo"
+          className="w-24 h-24 mx-auto rounded-full border-2 border-blue-500 object-cover mb-4"
+        />
+        )}
         <div>
           <h4 className="text-lg font-semibold text-center">
             {data.studentNameEn}
