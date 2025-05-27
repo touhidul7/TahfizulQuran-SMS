@@ -14,6 +14,7 @@ const App = () => {
   const [result, setResult] = useState("");
 
   const backendApiUrl = import.meta.env.VITE_API_BASE_URL;
+  const formApiKey = import.meta.env.VITE_FORM_API_KEY;
   /*  */
   const [classes, setClasses] = useState([]); // State to store the fetched data
   const [error, setError] = useState(null); // State to handle any errors
@@ -170,7 +171,7 @@ const App = () => {
 
     // Prepare data to send via Web3Forms
     const web3FormData = new FormData();
-    web3FormData.append("access_key", "4727cb6c-ba2c-4318-8eb4-82caaeac0f6b");
+    web3FormData.append("access_key", `${formApiKey}`);
     web3FormData.append("studentName", formData.studentNameEn || "N/A");
     web3FormData.append("subject", "A Student Admission request has submitted");
     web3FormData.append("studentId", studentID || "N/A");
