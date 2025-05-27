@@ -280,7 +280,7 @@ const App = () => {
     <div className="bg-gray-100 min-h-screen flex items-center justify-center lg:py-8 pb-8">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="bg-white w-full max-w-5xl lg:rounded-lg shadow-lg p-0">
-        <img className="lg:rounded-t-lg" src="./img/Form-Heading.jpg" alt="" />
+        <img className="lg:rounded-t-lg" src="./img/Admission-top.png" alt="" />
         <form className="p-6" onSubmit={handleSubmit}>
           {/* Student Information */}
           <FormSection title="Student Information">

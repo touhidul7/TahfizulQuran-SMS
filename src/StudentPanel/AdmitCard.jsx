@@ -153,17 +153,16 @@ const AdmitCard = () => {
          className="w-[70px] mx-auto mb-3"
        /> */}
                 <h1 className="text-[#2DB75B] text-[30px] leading-tight font-semibold m-0 p-0 -mt-4">
-                  মেধা বিকাশ শিশু নিকেতন এন্ড কুরআন একাডেমি
+                  আল মকবুল তাহফিজুল কুরআন একাডেমী ও হিফজ মাদরাসা
                 </h1>
                 <h1 className="text-[#1A56DB] text-[22px] font-semibold -mt-2">
-                  Medha Bikash Shishoo Nikatan And Quran Academy
+                  Al Maqbul Tahfizul Quran Academy & Hifz Madrasa
                 </h1>
                 <div className="text-center  font-[450] text-md">
                   <p>
-                    স্থাপিতঃ ২০<span className="font-poppins">১</span>৮ ইং,
+                    স্থাপিতঃ ২০২২ ইং,
                   </p>
-                  <p>বিদ্যালয় কোডঃ ৭০৫০৮৩৩২০</p>
-                  <p>৩৩ নং ওয়ার্ড মহানগর, রংপুর।</p>
+                  <p>নিয়ামত, পান্ডার দিঘি (ঈদগাহ মাঠ সংলগ্ন) বুড়িরহাট রোড, রংপুর।</p>
                 </div>
                 <img
                   src={`${backendFileUrl}/admin/students/${data.studentImage}`}
@@ -264,12 +263,12 @@ const AdmitCard = () => {
                 <div className="text-center border-t border-black pt-2 w-[40%]">
                   <strong>পরিচালক</strong>
                   <br />
-                  মেধা বিকাশ শিশু নিকেতন
+                  তাহফিজুল কুরআন একাডেমী
                 </div>
                 <div className="text-center border-t border-black pt-2 w-[40%]">
                   <strong>প্রধান শিক্ষক</strong>
                   <br />
-                  মেধা বিকাশ শিশু নিকেতন
+                  তাহফিজুল কুরআন একাডেমী
                 </div>
               </div>
             </div>

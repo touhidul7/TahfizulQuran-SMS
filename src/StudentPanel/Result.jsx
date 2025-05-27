@@ -201,7 +201,7 @@ const Result = () => {
         {/* Result Header */}
         <div className="bg-gray-100 p-5 rounded-lg mb-8 text-center">
           <h1 className="text-xl font-bold">
-            Medha Bikash Shishoo Nikatan & Quran Academy Exam Result
+            Al Maqbul Tahfizul Quran Academy & Hifz Madrasa
           </h1>
         </div>
 
@@ -231,7 +231,7 @@ const Result = () => {
               <div className="flex items-center border border-gray-300 p-4 rounded-md">
                 <span className="w-1/2 font-medium">Institute</span>
                 <span className="w-1/2 text-left">
-                  <b>:</b> Medha Bikash
+                  <b>:</b> Tahfizul Quran
                 </span>
               </div>
             </div>

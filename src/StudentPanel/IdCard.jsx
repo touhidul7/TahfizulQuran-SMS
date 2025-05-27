@@ -7,6 +7,23 @@ const IdCard = () => {
   const backendFileUrl = import.meta.env.VITE_FILE_BASE_URL;
   const { data } = useOutletContext();
 
+  // console.log("IdCard Data:", data);
+
+  /* Date formater */
+  const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const options = { day: '2-digit', month: 'long', year: 'numeric' };
+  return date.toLocaleDateString('en-GB', options);
+};
+const getOneYearLater = (dateString) => {
+  const date = new Date(dateString);
+  date.setFullYear(date.getFullYear() + 1);
+  return date.toISOString().split('T')[0]; // format back to "YYYY-MM-DD"
+};
+
+
+
+
   const handleDownloadPDF = () => {
     const idCardElement = document.getElementById("id-card");
 
@@ -108,8 +125,8 @@ const IdCard = () => {
           </tbody>
         </table>
         <div className="text-xs text-gray-600 text-center">
-          <p>Issued on: 01 December 2024</p>
-          <p>Valid Until: 31 December 2025</p>
+          <p>Issued on: {formatDate(data.admissiondate)}</p>
+          <p>Valid Until: {formatDate(getOneYearLater(data.admissiondate))}</p>
         </div>
       </div>
       {/* ID Card Download Button */}

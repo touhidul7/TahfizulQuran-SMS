@@ -189,10 +189,10 @@ const Testmn = () => {
             className="w-[70px] mx-auto mb-3"
           /> */}
               <h1 className="text-[#2DB75B] text-[30px] leading-tight font-semibold mb-">
-                মেধা বিকাশ শিশু নিকেতন এন্ড কুরআন একাডেমি
+                আল মকবুল তাহফিজুল কুরআন একাডেমী ও হিফজ মাদরাসা
               </h1>
               <h1 className="text-[#1A56DB] text-[25px] font-semibold my-1">
-                Medha Bikash Shishoo Nikatan And Quran Academy
+                Al Maqbul Tahfizul Quran Academy & Hifz Madrasa
               </h1>
               <div className="text-center  font-[450] text-md">
                 <p>
@@ -255,12 +255,12 @@ const Testmn = () => {
               <div className="text-center border-t border-black pt-2 w-[40%]">
                 <strong>ভাইস প্রিন্সিপাল</strong>
                 <br />
-                মেধা বিকাশ শিশু নিকেতন
+                তাহফিজুল কুরআন একাডেমী
               </div>
               <div className="text-center border-t border-black pt-2 w-[40%]">
                 <strong>প্রিন্সিপাল</strong>
                 <br />
-                মেধা বিকাশ শিশু নিকেতন
+                তাহফিজুল কুরআন একাডেমী
               </div>
             </div>
             <div className="mt-5 text-right text-sm text-gray-600">
