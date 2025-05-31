@@ -53,15 +53,15 @@ const PayFee = () => {
     // Company Details
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
-    doc.text("Medha Bikash Shishu Niketan & Quran Academy", 20, 30);
+    doc.text("Al Maqbul Tahfizul Quran Academy & Hifz Madrasa", 20, 30);
     doc.setFont("helvetica", "normal");
     doc.text(
-      "Hosen Nagar Road, Azizullah, Ward No. 33, Metropolis, Rangpur.",
+      "Niyamat, Pander Dighi (adjacent to Eidgah field), Burirhat Road, Rangpur.",
       20,
       35
     );
-    doc.text("Phone: +880 1717084442", 20, 45);
-    doc.text("Email: mbsn2918@gmail.com", 20, 50);
+    doc.text("Phone: +8801707044415", 20, 45);
+    // doc.text("Email: mbsn2918@gmail.com", 20, 50);
 
     // Invoice Details
     doc.setFont("helvetica", "normal");
